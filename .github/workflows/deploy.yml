@@ -219,10 +219,15 @@ jobs:
         DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
       run: |
-        echo "Deploying to production environment..."
-        echo "Host: $DEPLOY_HOST"
-        # Add production deployment commands here
-        # ssh production-server "cd /path/to/app && ./scripts/deploy.sh"
+        if [ -n "$DEPLOY_HOST" ] && [ -n "$DEPLOY_USER" ] && [ -n "$DEPLOY_KEY" ]; then
+          echo "Deploying to production environment..."
+          echo "Host: $DEPLOY_HOST"
+          # Add production deployment commands here
+          # ssh production-server "cd /path/to/app && ./scripts/deploy.sh"
+        else
+          echo "⚠️ Production deployment secrets not configured"
+          echo "📝 Add DEPLOY_HOST, DEPLOY_USER, and DEPLOY_KEY secrets to enable deployment"
+        fi
 
   notify:
     runs-on: ubuntu-latest
