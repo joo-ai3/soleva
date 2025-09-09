@@ -5,12 +5,21 @@ This guide explains how to complete the setup of GitHub Actions workflows for th
 ## ✅ Fixed Issues
 
 ### 1. Updated Deprecated Actions
-- Updated `actions/upload-artifact@v3` to `actions/upload-artifact@v4` ✅ (Already completed)
-- Updated `actions/cache@v3` to `actions/cache@v4` ✅ (Just completed)
+- Updated `actions/upload-artifact@v3` to `actions/upload-artifact@v4` ✅
+- Updated `actions/cache@v3` to `actions/cache@v4` ✅
+
+### 2. Fixed ESLint Configuration
+- Removed `--ext ts,tsx` flag from lint scripts in package.json ✅
+- Updated to work with modern eslint.config.js format ✅
+
+### 3. Created Workflow Files
+- Created `.github/workflows/frontend.yml` for frontend CI/CD ✅
+- Created `.github/workflows/backend.yml` for backend CI/CD ✅
+- Created `.github/workflows/notifications.yml` for Slack notifications ✅
 
 ## 🔧 Required Setup: Slack Notifications
 
-The workflow includes Slack notifications for deployment status, but requires a repository secret to be configured.
+The notification workflow will automatically detect if the `SLACK_WEBHOOK_URL` secret is configured. If not configured, it will skip sending notifications and log helpful setup instructions.
 
 ### Setting up SLACK_WEBHOOK_URL Secret
 
@@ -37,16 +46,22 @@ https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
 
 ## 📋 Workflow Overview
 
-The updated workflow now includes:
+The GitHub Actions setup includes three separate workflow files:
 
-### Jobs:
+### Frontend Workflow (`frontend.yml`):
+1. **test-frontend** - Lints, type-checks, and builds React frontend
+2. **security-scan** - Runs Trivy vulnerability scanner on frontend
+3. **build-and-push** - Builds and pushes frontend Docker image
+
+### Backend Workflow (`backend.yml`):
 1. **test-backend** - Tests Django backend with PostgreSQL and Redis
-2. **test-frontend** - Tests React frontend with linting and type checking
-3. **security-scan** - Runs Trivy vulnerability scanner
-4. **build-and-push** - Builds and pushes Docker images to GitHub Container Registry
-5. **deploy-staging** - Deploys to staging environment (main branch)
-6. **deploy-production** - Deploys to production environment (production branch)
-7. **notify** - Sends Slack notifications about deployment status
+2. **security-scan** - Runs Trivy vulnerability scanner on backend  
+3. **build-and-push** - Builds and pushes backend Docker image
+
+### Notifications Workflow (`notifications.yml`):
+1. **notify** - Sends Slack notifications about workflow completion status
+2. Automatically triggered when frontend or backend workflows complete
+3. Gracefully handles missing SLACK_WEBHOOK_URL secret
 
 ### Triggers:
 - **Push** to `main` or `production` branches
@@ -54,12 +69,18 @@ The updated workflow now includes:
 
 ## 🔍 Verification
 
-After adding the `SLACK_WEBHOOK_URL` secret:
+To test the workflows:
 
-1. Push a commit to the `main` branch
-2. Check the **Actions** tab in your GitHub repository
-3. Verify all jobs complete successfully
-4. Check your Slack channel for deployment notifications
+1. **Without Slack Setup:**
+   - Push a commit to the `main` branch
+   - Check the **Actions** tab in your GitHub repository
+   - Verify all jobs complete successfully
+   - The notification workflow will log that SLACK_WEBHOOK_URL is not configured
+
+2. **With Slack Setup:**
+   - Add the `SLACK_WEBHOOK_URL` secret following the instructions above
+   - Push another commit to the `main` branch
+   - Check your Slack channel for workflow notifications
 
 ## 🚀 Additional Secrets (If Needed)
 

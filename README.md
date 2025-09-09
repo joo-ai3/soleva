@@ -220,7 +220,7 @@ The platform supports multiple domains with automatic redirects:
 - **Primary Domain**: `thesoleva.com`
 - **Redirect Domains**: `soleva.shop`, `soleva.vip`, `sole-va.com`
 
-All traffic is automatically redirected to `https://thesoleva.com` with proper SEO handling.
+All traffic is automatically redirected to `https://hetsoleva.com` with proper SEO handling.
 
 ## 🔒 SSL Certificate Management
 

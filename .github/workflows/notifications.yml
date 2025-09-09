@@ -1,0 +1,144 @@
+name: Notifications
+
+on:
+  workflow_run:
+    workflows: ["Frontend CI/CD", "Backend CI/CD"]
+    types: [completed]
+  
+  # Manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Custom notification message'
+        required: false
+        default: 'Manual workflow trigger'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Get workflow conclusion
+        id: workflow_status
+        run: |
+          if [ "${{ github.event.workflow_run.conclusion }}" = "success" ]; then
+            echo "status=✅ Success" >> $GITHUB_OUTPUT
+            echo "color=good" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.workflow_run.conclusion }}" = "failure" ]; then
+            echo "status=❌ Failed" >> $GITHUB_OUTPUT
+            echo "color=danger" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.workflow_run.conclusion }}" = "cancelled" ]; then
+            echo "status=⚪ Cancelled" >> $GITHUB_OUTPUT
+            echo "color=warning" >> $GITHUB_OUTPUT
+          else
+            echo "status=🔄 ${{ github.event.workflow_run.conclusion }}" >> $GITHUB_OUTPUT
+            echo "color=#439FE0" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Send Slack notification
+        if: env.SLACK_WEBHOOK_URL != ''
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          # Get workflow details
+          WORKFLOW_NAME="${{ github.event.workflow_run.name || github.workflow }}"
+          REPOSITORY="${{ github.repository }}"
+          BRANCH="${{ github.event.workflow_run.head_branch || github.ref_name }}"
+          ACTOR="${{ github.event.workflow_run.actor.login || github.actor }}"
+          RUN_URL="${{ github.event.workflow_run.html_url || github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          
+          # Handle manual trigger
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            MESSAGE="${{ github.event.inputs.message }}"
+            STATUS="🔄 Manual Trigger"
+            COLOR="#439FE0"
+          else
+            MESSAGE="Workflow completed"
+            STATUS="${{ steps.workflow_status.outputs.status }}"
+            COLOR="${{ steps.workflow_status.outputs.color }}"
+          fi
+          
+          # Create Slack payload
+          PAYLOAD=$(cat <<EOF
+          {
+            "attachments": [
+              {
+                "color": "$COLOR",
+                "blocks": [
+                  {
+                    "type": "header",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "🚀 Soleva Platform - Workflow Notification"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Workflow:*\n$WORKFLOW_NAME"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Status:*\n$STATUS"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Repository:*\n$REPOSITORY"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Branch:*\n$BRANCH"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Triggered by:*\n$ACTOR"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Message:*\n$MESSAGE"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "actions",
+                    "elements": [
+                      {
+                        "type": "button",
+                        "text": {
+                          "type": "plain_text",
+                          "text": "View Workflow Run"
+                        },
+                        "url": "$RUN_URL",
+                        "action_id": "view_run"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+          EOF
+          )
+          
+          # Send to Slack
+          curl -X POST -H 'Content-type: application/json' \
+               --data "$PAYLOAD" \
+               "$SLACK_WEBHOOK_URL"
+      
+      - name: Log notification status
+        run: |
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            echo "✅ Slack notification sent successfully"
+          else
+            echo "⚠️  SLACK_WEBHOOK_URL secret not configured - notification skipped"
+            echo "📝 To enable Slack notifications:"
+            echo "   1. Create a Slack webhook URL"
+            echo "   2. Add it as a repository secret named 'SLACK_WEBHOOK_URL'"
+            echo "   3. See GITHUB_ACTIONS_SETUP.md for detailed instructions"
+          fi
