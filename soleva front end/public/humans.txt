@@ -1,0 +1,10 @@
+/* TEAM */
+Website: thesoleva.com
+Location: Cairo, Egypt
+
+/* SITE */
+Last update: 2024/01/01
+Language: English / Arabic
+Standards: HTML5, CSS3, TypeScript
+Components: React, Django, PostgreSQL
+Software: VS Code, Git

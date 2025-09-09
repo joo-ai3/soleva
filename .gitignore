@@ -1,0 +1,43 @@
+# ======================
+# Node.js (Frontend)
+# ======================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+
+# ======================
+# Python (Backend - Django/Flask)
+# ======================
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+env/
+venv/
+.env
+
+# ======================
+# Docker
+# ======================
+*.pid
+*.seed
+*.pid.lock
+docker-data/
+postgres_data/
+redis_data/
+backups/
+
+# ======================
+# VS Code
+# ======================
+.vscode/
+*.code-workspace
+
+# ======================
+# System Files
+# ======================
+.DS_Store
+Thumbs.db

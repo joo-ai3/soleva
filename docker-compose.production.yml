@@ -1,0 +1,166 @@
+name: soleva-production
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: soleva_postgres
+    environment:
+      POSTGRES_DB: soleva_db
+      POSTGRES_USER: soleva_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - soleva_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: soleva_redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - soleva_network
+
+  backend:
+    build:
+      context: ./soleva\ back\ end
+      dockerfile: Dockerfile.prod
+    container_name: soleva_backend
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=False
+      - DB_NAME=soleva_db
+      - DB_USER=soleva_user
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - REDIS_URL=redis://redis:6379/1
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - ALLOWED_HOSTS=solevaeg.com,www.solevaeg.com,localhost,127.0.0.1
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+    networks:
+      - soleva_network
+
+  celery:
+    build:
+      context: ./soleva\ back\ end
+      dockerfile: Dockerfile.prod
+    container_name: soleva_celery
+    command: celery -A soleva_backend worker -l info
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=False
+      - DB_NAME=soleva_db
+      - DB_USER=soleva_user
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - REDIS_URL=redis://redis:6379/1
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    volumes:
+      - media_volume:/app/media
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+      - redis
+      - backend
+    restart: unless-stopped
+    networks:
+      - soleva_network
+
+  celery-beat:
+    build:
+      context: ./soleva\ back\ end
+      dockerfile: Dockerfile.prod
+    container_name: soleva_celery_beat
+    command: celery -A soleva_backend beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=False
+      - DB_NAME=soleva_db
+      - DB_USER=soleva_user
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - REDIS_URL=redis://redis:6379/1
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+      - redis
+      - backend
+    restart: unless-stopped
+    networks:
+      - soleva_network
+
+  frontend:
+    build:
+      context: ./soleva\ front\ end
+      dockerfile: Dockerfile.prod
+    container_name: soleva_frontend
+    environment:
+      - VITE_API_BASE_URL=https://solevaeg.com/api
+      - VITE_APP_NAME=Soleva
+      - VITE_NODE_ENV=production
+    volumes:
+      - frontend_build:/app/dist
+    restart: unless-stopped
+    networks:
+      - soleva_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: soleva_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites-available:/etc/nginx/sites-available
+      - ./nginx/sites-enabled:/etc/nginx/sites-enabled
+      - static_volume:/var/www/static
+      - media_volume:/var/www/media
+      - frontend_build:/var/www/html
+      - ./ssl:/etc/nginx/ssl
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - backend
+      - frontend
+    restart: unless-stopped
+    networks:
+      - soleva_network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  static_volume:
+    driver: local
+  media_volume:
+    driver: local
+  frontend_build:
+    driver: local
+
+networks:
+  soleva_network:
+    driver: bridge

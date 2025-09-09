@@ -1,0 +1,10 @@
+<svg width="120" height="80" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Curved swoosh element -->
+  <path d="M20 25 Q60 15 100 25" stroke="#f8fafc" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- SOLEVA text -->
+  <text x="60" y="50" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#f8fafc">SOLEVA</text>
+  
+  <!-- Made to Move tagline -->
+  <text x="60" y="65" font-family="Arial, sans-serif" font-size="8" font-weight="normal" text-anchor="middle" fill="#f8fafc" letter-spacing="2px">MADE TO MOVE</text>
+</svg>

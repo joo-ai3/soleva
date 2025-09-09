@@ -1,0 +1,343 @@
+/* Mobile Enhancement Styles for Soleva */
+
+/* High-resolution text rendering for mobile */
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+       screen and (min-resolution: 192dpi), 
+       screen and (min-resolution: 2dppx) {
+  body, 
+  .font-arabic, 
+  .font-montserrat {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-variant-ligatures: common-ligatures;
+    font-feature-settings: "liga" 1, "calt" 1;
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* Enhanced mobile typography with sharper text */
+@media (max-width: 768px) {
+  /* Base text improvements */
+  body {
+    font-size: 16px; /* Optimal for mobile readability */
+    line-height: 1.6;
+    letter-spacing: 0.02em; /* Slight spacing for better readability */
+  }
+
+  /* Headings optimization */
+  h1, .text-3xl, .text-4xl, .text-5xl {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  h2, .text-2xl {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  h3, .text-xl {
+    font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+    line-height: 1.4;
+    font-weight: 600;
+  }
+
+  /* Enhanced button text */
+  button, .btn {
+    font-size: 16px; /* Minimum for touch targets */
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    min-height: 44px; /* iOS recommended touch target */
+    min-width: 44px;
+  }
+
+  /* Product cards and pricing */
+  .product-price {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* Navigation text */
+  .nav-link {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 16px;
+    letter-spacing: 0.01em;
+  }
+
+  /* Form inputs optimization */
+  input, textarea, select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px 16px;
+    line-height: 1.5;
+  }
+}
+
+/* Mobile layout improvements */
+@media (max-width: 768px) {
+  /* Container spacing */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Card layouts */
+  .glass, .modern-glass-card {
+    margin: 0.75rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+  }
+
+  /* Product grid enhancements */
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  /* Mobile menu enhancements */
+  .mobile-menu-item {
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.5;
+    border-radius: 0.75rem;
+  }
+
+  /* Enhanced touch targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem;
+  }
+
+  /* Improved spacing for mobile */
+  .mobile-spacing {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Better visual hierarchy */
+  .mobile-section {
+    padding: 2rem 0;
+  }
+
+  .mobile-section + .mobile-section {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+}
+
+/* High-resolution image handling */
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+       screen and (min-resolution: 192dpi) {
+  .high-res-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  /* Product images */
+  .product-image {
+    transform: translateZ(0); /* Hardware acceleration */
+    will-change: transform;
+  }
+}
+
+/* Performance optimizations */
+.optimize-performance {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth animations */
+.smooth-animation {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cart badge animations */
+.cart-badge {
+  animation: cartBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes cartBounce {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Favorites badge animations */
+.favorites-badge {
+  animation: favoritePulse 0.5s ease-out;
+}
+
+@keyframes favoritePulse {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Enhanced mobile hover states */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+  
+  /* Use active states instead */
+  .mobile-touch-feedback:active {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+}
+
+/* Improved focus states for accessibility */
+.focus-enhanced:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Better contrast for mobile */
+@media (max-width: 768px) {
+  .text-gray-600 {
+    color: #4b5563; /* Darker for better readability */
+  }
+  
+  .text-gray-500 {
+    color: #6b7280; /* Darker for better readability */
+  }
+}
+
+/* RTL text improvements for Arabic */
+[dir="rtl"] {
+  font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
+}
+
+[dir="rtl"] .font-arabic {
+  text-align: right;
+  direction: rtl;
+  unicode-bidi: embed;
+}
+
+/* Loading state enhancements */
+.enhanced-loading {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.2) 20%, 
+    rgba(255, 255, 255, 0.5) 60%, 
+    rgba(255, 255, 255, 0)
+  );
+  background-size: 200% 100%;
+  animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Mobile navigation improvements */
+@media (max-width: 768px) {
+  .mobile-nav-item {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-nav-item:active {
+    background-color: rgba(59, 130, 246, 0.1);
+    transform: scale(0.98);
+  }
+}
+
+/* Enhanced glass effect for mobile */
+@media (max-width: 768px) {
+  .mobile-glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .mobile-glass {
+    background: rgba(30, 30, 30, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Mobile product card enhancements */
+@media (max-width: 768px) {
+  .mobile-product-card {
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+
+  .mobile-product-card:active {
+    transform: scale(0.98);
+  }
+
+  .mobile-product-image {
+    aspect-ratio: 1;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 0.75rem;
+  }
+
+  .mobile-product-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .mobile-product-price {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #059669;
+  }
+}
+
+/* Safe area handling for mobile devices */
+@supports (padding: max(0px)) {
+  .safe-area-padding {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  .safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}

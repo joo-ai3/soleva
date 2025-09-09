@@ -1,0 +1,27 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d1b16a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b8965a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- S -->
+  <path d="M8 12C8 8 12 6 16 6C20 6 24 8 24 12C24 16 20 18 16 18H12C8 18 4 20 4 24C4 28 8 30 12 30H20" 
+        stroke="url(#logoGradient)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- O -->
+  <circle cx="32" cy="20" r="8" stroke="url(#logoGradient)" stroke-width="2" fill="none"/>
+  
+  <!-- L -->
+  <path d="M48 8V30H60" stroke="url(#logoGradient)" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- E -->
+  <path d="M68 8V30M68 8H80M68 19H76M68 30H80" stroke="url(#logoGradient)" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- V -->
+  <path d="M88 8L96 30L104 8" stroke="url(#logoGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- A -->
+  <path d="M108 30L112 8L116 30M110 22H114" stroke="url(#logoGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
