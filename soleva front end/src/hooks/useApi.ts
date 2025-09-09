@@ -139,7 +139,7 @@ export function usePaginatedApi<T = any>(
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   
-  const { data, loading, error, execute, retry, reset } = useApi(
+  const { loading, error, execute, retry, reset } = useApi(
     apiFunction,
     {
       ...options,

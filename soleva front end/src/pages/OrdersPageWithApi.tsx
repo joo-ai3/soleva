@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Package, Clock, CheckCircle, XCircle, Upload, Eye } from 'lucide-react';
 import { useLang, useTranslation } from '../contexts/LangContext';
@@ -47,7 +47,6 @@ export const OrdersPageWithApi: React.FC = () => {
 
   // Upload payment proof mutation
   const {
-    loading: uploadLoading,
     error: uploadError,
     execute: executeUpload
   } = useApiMutation(uploadPaymentProof, {

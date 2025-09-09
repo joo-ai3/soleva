@@ -109,14 +109,14 @@ export default function RegisterPage() {
           showToast(data.message || 'Failed to send verification code', 'error');
         }
       }
-    } catch (error) {
+      } catch {
       showToast('Network error. Please check your connection.', 'error');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleOTPVerification = async (otpRequestId: string) => {
+  const handleOTPVerification = async () => {
     setIsLoading(true);
     
     try {
@@ -143,7 +143,7 @@ export default function RegisterPage() {
       } else {
         showToast(data.message || 'Registration failed', 'error');
       }
-    } catch (error) {
+      } catch {
       showToast('Network error. Please try again.', 'error');
     } finally {
       setIsLoading(false);

@@ -109,7 +109,7 @@ class ApiService {
       await this.axiosInstance.get('/health/', { timeout: 5000 });
       this.updateNetworkStatus(true);
       return true;
-    } catch (error) {
+    } catch {
       this.updateNetworkStatus(false);
       return false;
     }
@@ -210,7 +210,7 @@ class ApiService {
         localStorage.setItem('accessToken', response.data.access);
         return true;
       }
-    } catch (error) {
+    } catch {
       // Refresh failed, clear tokens
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
@@ -226,7 +226,7 @@ class ApiService {
         data: response.data,
         success: true
       };
-    } catch (error) {
+    } catch {
       return {
         data: null as T,
         success: false,
@@ -242,7 +242,7 @@ class ApiService {
         data: response.data,
         success: true
       };
-    } catch (error) {
+    } catch {
       return {
         data: null as T,
         success: false,
@@ -258,7 +258,7 @@ class ApiService {
         data: response.data,
         success: true
       };
-    } catch (error) {
+    } catch {
       return {
         data: null as T,
         success: false,
@@ -274,7 +274,7 @@ class ApiService {
         data: response.data,
         success: true
       };
-    } catch (error) {
+    } catch {
       return {
         data: null as T,
         success: false,
@@ -290,7 +290,7 @@ class ApiService {
         data: response.data,
         success: true
       };
-    } catch (error) {
+    } catch {
       return {
         data: null as T,
         success: false,

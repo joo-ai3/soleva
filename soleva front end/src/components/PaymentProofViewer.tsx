@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileImage, Download, Eye, CheckCircle, XCircle, Clock, AlertTriangle } from 'lucide-react';
+import { Download, Eye, CheckCircle, XCircle, Clock, AlertTriangle } from 'lucide-react';
 import { PaymentProof } from '../types';
 import { useLang } from '../contexts/LangContext';
 

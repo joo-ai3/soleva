@@ -50,7 +50,7 @@ export default function OTPVerificationForm({
       if (data.success) {
         setOtpStatus(data.otp_status);
       }
-    } catch (error) {
+    } catch {
       console.error('Error fetching OTP status:', error);
     }
   }, [email, otpType]);
@@ -98,7 +98,7 @@ export default function OTPVerificationForm({
         setError(data.message || 'Failed to send verification code');
         showToast(data.message || 'Failed to send verification code', 'error');
       }
-    } catch (error) {
+    } catch {
       const errorMessage = 'Network error. Please check your connection.';
       setError(errorMessage);
       showToast(errorMessage, 'error');
@@ -134,7 +134,7 @@ export default function OTPVerificationForm({
         setError(data.message || 'Failed to resend verification code');
         showToast(data.message || 'Failed to resend verification code', 'error');
       }
-    } catch (error) {
+    } catch {
       const errorMessage = 'Network error. Please check your connection.';
       setError(errorMessage);
       showToast(errorMessage, 'error');
@@ -177,7 +177,7 @@ export default function OTPVerificationForm({
         }
         showToast(data.message || 'Invalid verification code', 'error');
       }
-    } catch (error) {
+    } catch {
       const errorMessage = 'Network error. Please check your connection.';
       setError(errorMessage);
       setOtpCode('');

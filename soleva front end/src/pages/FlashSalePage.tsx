@@ -57,7 +57,7 @@ export default function FlashSalePage() {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const handleAddToCart = async (productId: string, _price: number) => {
+  const handleAddToCart = async (productId: string) => {
     try {
       const result = await addToCart({
         product_id: parseInt(productId),

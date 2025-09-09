@@ -38,7 +38,7 @@ interface UserMessagesInboxProps {
 }
 
 export default function UserMessagesInbox({ className = '' }: UserMessagesInboxProps) {
-  const { lang, t } = useLang();
+  const { lang } = useLang();
   const { user } = useAuth();
   const [messages, setMessages] = useState<UserMessage[]>([]);
   const [selectedMessage, setSelectedMessage] = useState<UserMessage | null>(null);

@@ -34,7 +34,6 @@ interface SpecialOfferButtonProps {
 export default function SpecialOfferButton({ 
   offers, 
   productId, 
-  productPrice: _productPrice, 
   onOfferActivate 
 }: SpecialOfferButtonProps) {
   const { lang } = useLang();
@@ -92,26 +91,28 @@ export default function SpecialOfferButton({
           ? `اشتري ${offer.buy_quantity} واحصل على ${offer.free_quantity} مجاناً`
           : `Buy ${offer.buy_quantity} Get ${offer.free_quantity} Free`;
       
-      case 'buy_x_get_discount':
+      case 'buy_x_get_discount': {
         const discountText = offer.discount_type === 'percentage' 
           ? `${offer.discount_value}%` 
           : `${offer.discount_value} ${lang === 'ar' ? 'ج.م' : 'EGP'}`;
         return lang === 'ar' 
           ? `اشتري ${offer.buy_quantity} واحصل على خصم ${discountText}`
           : `Buy ${offer.buy_quantity} Get ${discountText} Off`;
+      }
       
       case 'buy_x_free_shipping':
         return lang === 'ar' 
           ? `اشتري ${offer.buy_quantity} واحصل على شحن مجاني`
           : `Buy ${offer.buy_quantity} Get Free Shipping`;
       
-      case 'bundle_discount':
+      case 'bundle_discount': {
         const bundleDiscountText = offer.discount_type === 'percentage' 
           ? `${offer.discount_value}%` 
           : `${offer.discount_value} ${lang === 'ar' ? 'ج.م' : 'EGP'}`;
         return lang === 'ar' 
           ? `عرض حزمة: خصم ${bundleDiscountText}`
           : `Bundle Deal: ${bundleDiscountText} Off`;
+      }
       
       default:
         return prefix;

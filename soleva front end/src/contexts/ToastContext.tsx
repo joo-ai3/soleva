@@ -18,7 +18,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     setTimeout(() => setOpen(true), 50);
   };
 
-  const addToast = (message: string, _type?: 'success' | 'error' | 'info' | 'warning') => {
+  const addToast = (message: string) => {
     showToast(message);
   };
   

@@ -33,7 +33,7 @@ const OrdersPage: React.FC = () => {
       } else {
         setError(response.error || 'Failed to fetch orders');
       }
-    } catch (err) {
+    } catch {
       setError('Failed to fetch orders');
     } finally {
       setLoading(false);

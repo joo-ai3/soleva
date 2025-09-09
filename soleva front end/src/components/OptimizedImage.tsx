@@ -11,7 +11,7 @@ interface OptimizedImageComponentProps extends Omit<OptimizedImageProps, 'placeh
 }
 
 // Helper function to get optimized image props
-const getOptimizedImageProps = (props: any) => {
+const getOptimizedImageProps = (props: OptimizedImageProps) => {
   return {
     src: ImageOptimizer.optimizeImage(props.src, props),
     alt: props.alt,

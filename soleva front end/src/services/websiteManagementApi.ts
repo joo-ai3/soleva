@@ -154,7 +154,7 @@ export const getCachedSiteConfig = async (): Promise<SiteConfiguration> => {
     siteConfigCache = await websiteManagementApi.getSiteConfig();
     siteConfigCacheTime = now;
     return siteConfigCache;
-  } catch (error) {
+  } catch {
     // Return default configuration if API fails
     return {
       site_name_en: 'Soleva',

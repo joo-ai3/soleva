@@ -66,14 +66,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               setUser(response.data as User);
               localStorage.setItem('user', JSON.stringify(response.data));
             }
-          } catch (error) {
+          } catch {
             // Token is invalid, clear data
             localStorage.removeItem(API_CONFIG.AUTH_TOKEN_KEY);
             localStorage.removeItem(API_CONFIG.REFRESH_TOKEN_KEY);
             localStorage.removeItem('user');
             setUser(null);
           }
-        } catch (error) {
+        } catch {
           console.error('Error loading user:', error);
           // Clear invalid data
           localStorage.removeItem(API_CONFIG.AUTH_TOKEN_KEY);
@@ -171,7 +171,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (refreshToken) {
         await authApi.logout(refreshToken);
       }
-    } catch (error) {
+    } catch {
       console.error('Logout error:', error);
     } finally {
       // Clear all auth data
@@ -205,7 +205,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         await logout();
         return false;
       }
-    } catch (error) {
+    } catch {
       console.error('Token refresh error:', error);
       await logout();
       return false;

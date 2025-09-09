@@ -85,7 +85,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isAuthenticated, user]);
 
-  const addToFavorites = async (productId: number, _triggerElement?: HTMLElement, _productImage?: string) => {
+  const addToFavorites = async (productId: number) => {
     try {
       setIsUpdating(true);
       
