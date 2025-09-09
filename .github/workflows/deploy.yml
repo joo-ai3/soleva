@@ -253,11 +253,10 @@ jobs:
           fi
           
           # Create Slack payload
-          PAYLOAD=$(cat <<EOF
-          {
+          PAYLOAD='{
             "attachments": [
               {
-                "color": "$COLOR",
+                "color": "'$COLOR'",
                 "blocks": [
                   {
                     "type": "header",
@@ -271,7 +270,7 @@ jobs:
                     "fields": [
                       {
                         "type": "mrkdwn",
-                        "text": "*Status:*\n$STATUS"
+                        "text": "*Status:*\n'$STATUS'"
                       },
                       {
                         "type": "mrkdwn",
@@ -290,9 +289,7 @@ jobs:
                 ]
               }
             ]
-          }
-          EOF
-          )
+          }'
           
           # Send to Slack
           curl -X POST -H 'Content-type: application/json' \

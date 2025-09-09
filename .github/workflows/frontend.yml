@@ -24,16 +24,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          # Disable npm cache to avoid Rollup native dependency issues
-          # cache: 'npm'
-          # cache-dependency-path: './soleva front end/package-lock.json'
+          cache: 'npm'
+          cache-dependency-path: 'soleva front end/package-lock.json'
       
-      - name: Clear npm cache and install dependencies
+      - name: Install dependencies
         run: |
-          npm cache clean --force
-          # Use npm install instead of npm ci to handle optional dependencies properly
-          npm install
-          # Explicitly install rollup with native dependencies
+          # Try npm ci first, fallback to npm install if cache issues occur
+          npm ci || (npm cache clean --force && npm install)
+          # Explicitly install rollup with native dependencies to avoid Linux binary issues
           npm install rollup@latest
         env:
           # Force npm to rebuild native dependencies

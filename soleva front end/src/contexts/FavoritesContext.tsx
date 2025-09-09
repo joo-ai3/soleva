@@ -16,9 +16,9 @@ interface FavoritesContextType {
   favorites: FavoriteItem[];
   isLoading: boolean;
   isUpdating: boolean;
-  addToFavorites: (productId: number, triggerElement?: HTMLElement, productImage?: string) => Promise<{ success: boolean; error?: string }>;
+  addToFavorites: (productId: number) => Promise<{ success: boolean; error?: string }>;
   removeFromFavorites: (productId: number) => Promise<{ success: boolean; error?: string }>;
-  toggleFavorite: (productId: number, triggerElement?: HTMLElement, productImage?: string) => Promise<{ success: boolean; error?: string }>;
+  toggleFavorite: (productId: number) => Promise<{ success: boolean; error?: string }>;
   isFavorite: (productId: number) => boolean;
   getFavoriteIds: () => number[];
   refreshFavorites: () => Promise<void>;
@@ -190,7 +190,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const toggleFavorite = async (productId: number, triggerElement?: HTMLElement, productImage?: string) => {
+  const toggleFavorite = async (productId: number) => {
     const isFav = isFavorite(productId);
     
     if (isFav) {
