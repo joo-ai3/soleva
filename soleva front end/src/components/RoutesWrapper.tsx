@@ -94,6 +94,8 @@ export default function RoutesWrapper() {
               <Route path="/order-confirmation" element={<LazyRoute component={LazyOrderConfirmation} />} />
               <Route path="/account" element={<LazyRoute component={LazyAccountPage} />} />
               <Route path="/orders" element={<LazyRoute component={LazyOrdersPage} />} />
+              <Route path="/track-order" element={<LazyRoute component={LazyOrderTrackingPage} />} />
+              <Route path="/track-order/:orderNumber" element={<LazyRoute component={LazyOrderTrackingPage} />} />
               <Route path="/order-tracking" element={<LazyRoute component={LazyOrderTrackingPage} />} />
               <Route path="*" element={<LazyRoute component={LazyNotFoundPage} />} />
             </Routes>

@@ -25,6 +25,7 @@ export default function AppFooter() {
       { label: t('orders'), to: '/orders' }
     ],
     support: [
+      { label: lang === 'ar' ? 'تتبع الطلب' : 'Track Order', to: '/track-order' },
       { label: lang === 'ar' ? 'مركز المساعدة' : 'Help Center', to: '/help' },
       { label: lang === 'ar' ? 'الشحن والتوصيل' : 'Shipping & Delivery', to: '/shipping' },
       { label: lang === 'ar' ? 'الإرجاع والاستبدال' : 'Returns & Exchanges', to: '/returns' },

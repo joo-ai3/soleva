@@ -5,6 +5,8 @@ import { useLang, useTranslation } from '../contexts/LangContext';
 
 import GlassButton from '../components/GlassButton';
 import UserMessagesInbox from '../components/UserMessagesInbox';
+import { OrdersPageWithApi } from './OrdersPageWithApi';
+import OrderTrackingPage from './OrderTrackingPage';
 
 export default function AccountPage() {
   const { user, logout } = useAuth();
@@ -159,21 +161,13 @@ export default function AccountPage() {
             
             {tab === "orders" && (
               <div>
-                <h2 className="text-2xl font-bold mb-6">{t("orders")}</h2>
-                <div className="text-center py-12 text-gray-500">
-                  <FiFileText size={48} className="mx-auto mb-4 opacity-50" />
-                  <p>{t("ordersPlaceholder")}</p>
-                </div>
+                <OrdersPageWithApi />
               </div>
             )}
             
             {tab === "tracking" && (
               <div>
-                <h2 className="text-2xl font-bold mb-6">{t("orderTracking")}</h2>
-                <div className="text-center py-12 text-gray-500">
-                  <FiBox size={48} className="mx-auto mb-4 opacity-50" />
-                  <p>{t("orderTrackingPlaceholder")}</p>
-                </div>
+                <OrderTrackingPage />
               </div>
             )}
             

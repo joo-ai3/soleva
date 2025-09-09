@@ -150,6 +150,154 @@ class OrderAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related('payment_proofs')
+    
+    def save_model(self, request, obj, form, change):
+        """Override save to track status changes and create history"""
+        if change:
+            # Get the original object from the database
+            original = Order.objects.get(pk=obj.pk)
+            old_status = original.status
+            old_payment_status = original.payment_status
+            
+            # Save the object first
+            super().save_model(request, obj, form, change)
+            
+            # Create status history if status changed
+            if obj.status != old_status:
+                from .models import OrderStatusHistory
+                OrderStatusHistory.objects.create(
+                    order=obj,
+                    previous_status=old_status,
+                    new_status=obj.status,
+                    comment=f'Status updated by admin: {request.user.username}',
+                    changed_by=request.user
+                )
+                
+                # Update relevant timestamps
+                from django.utils import timezone
+                if obj.status == 'confirmed' and not obj.confirmed_at:
+                    obj.confirmed_at = timezone.now()
+                elif obj.status == 'shipped' and not obj.shipped_at:
+                    obj.shipped_at = timezone.now()
+                elif obj.status == 'delivered' and not obj.delivered_at:
+                    obj.delivered_at = timezone.now()
+                elif obj.status == 'cancelled' and not obj.cancelled_at:
+                    obj.cancelled_at = timezone.now()
+                
+                obj.save(update_fields=['confirmed_at', 'shipped_at', 'delivered_at', 'cancelled_at'])
+                
+            # Handle payment status changes
+            if obj.payment_status != old_payment_status and obj.payment_status == 'payment_approved':
+                # Auto-confirm order when payment is approved
+                if obj.status == 'pending':
+                    obj.status = 'confirmed'
+                    if not obj.confirmed_at:
+                        obj.confirmed_at = timezone.now()
+                    obj.save(update_fields=['status', 'confirmed_at'])
+                    
+                    # Create status history for auto-confirmation
+                    OrderStatusHistory.objects.create(
+                        order=obj,
+                        previous_status='pending',
+                        new_status='confirmed',
+                        comment='Auto-confirmed after payment approval',
+                        changed_by=request.user
+                    )
+        else:
+            super().save_model(request, obj, form, change)
+    
+    # Custom admin actions
+    actions = ['mark_as_confirmed', 'mark_as_processing', 'mark_as_shipped', 'mark_as_delivered']
+    
+    def mark_as_confirmed(self, request, queryset):
+        """Mark selected orders as confirmed"""
+        from .models import OrderStatusHistory
+        from django.utils import timezone
+        
+        updated = 0
+        for order in queryset.filter(status='pending'):
+            order.status = 'confirmed'
+            order.confirmed_at = timezone.now()
+            order.save()
+            
+            OrderStatusHistory.objects.create(
+                order=order,
+                previous_status='pending',
+                new_status='confirmed',
+                comment=f'Bulk confirmed by admin: {request.user.username}',
+                changed_by=request.user
+            )
+            updated += 1
+            
+        self.message_user(request, f'{updated} orders marked as confirmed.')
+    mark_as_confirmed.short_description = "Mark selected orders as confirmed"
+    
+    def mark_as_processing(self, request, queryset):
+        """Mark selected orders as processing"""
+        from .models import OrderStatusHistory
+        
+        updated = 0
+        for order in queryset.filter(status='confirmed'):
+            order.status = 'processing'
+            order.save()
+            
+            OrderStatusHistory.objects.create(
+                order=order,
+                previous_status='confirmed',
+                new_status='processing',
+                comment=f'Bulk processing by admin: {request.user.username}',
+                changed_by=request.user
+            )
+            updated += 1
+            
+        self.message_user(request, f'{updated} orders marked as processing.')
+    mark_as_processing.short_description = "Mark selected orders as processing"
+    
+    def mark_as_shipped(self, request, queryset):
+        """Mark selected orders as shipped"""
+        from .models import OrderStatusHistory
+        from django.utils import timezone
+        
+        updated = 0
+        for order in queryset.filter(status='processing'):
+            order.status = 'shipped'
+            order.shipped_at = timezone.now()
+            order.save()
+            
+            OrderStatusHistory.objects.create(
+                order=order,
+                previous_status='processing',
+                new_status='shipped',
+                comment=f'Bulk shipped by admin: {request.user.username}',
+                changed_by=request.user
+            )
+            updated += 1
+            
+        self.message_user(request, f'{updated} orders marked as shipped.')
+    mark_as_shipped.short_description = "Mark selected orders as shipped"
+    
+    def mark_as_delivered(self, request, queryset):
+        """Mark selected orders as delivered"""
+        from .models import OrderStatusHistory
+        from django.utils import timezone
+        
+        updated = 0
+        for order in queryset.filter(status__in=['shipped', 'out_for_delivery']):
+            order.status = 'delivered'
+            order.delivered_at = timezone.now()
+            order.save()
+            
+            OrderStatusHistory.objects.create(
+                order=order,
+                previous_status=order.status,
+                new_status='delivered',
+                comment=f'Bulk delivered by admin: {request.user.username}',
+                changed_by=request.user
+            )
+            updated += 1
+            
+        self.message_user(request, f'{updated} orders marked as delivered.')
+    mark_as_delivered.short_description = "Mark selected orders as delivered"
 
 
 @admin.register(PaymentProof)

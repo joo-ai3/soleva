@@ -32,10 +32,11 @@ export const OrdersPageWithApi: React.FC = () => {
   const t = useTranslation();
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [uploadingProof, setUploadingProof] = useState<number | null>(null);
+  const [filterStatus, setFilterStatus] = useState<'all' | 'completed' | 'in_delivery' | 'pending'>('all');
 
   // Fetch orders with error handling
   const {
-    data: orders,
+    data: allOrders,
     loading: ordersLoading,
     error: ordersError,
     retry: retryOrders
@@ -45,6 +46,29 @@ export const OrdersPageWithApi: React.FC = () => {
       console.error('Failed to fetch orders:', error);
     }
   });
+
+  // Filter orders based on selected status
+  const orders = React.useMemo(() => {
+    if (!allOrders) return [];
+    
+    switch (filterStatus) {
+      case 'completed':
+        return allOrders.filter(order => order.status === 'delivered');
+      case 'in_delivery':
+        return allOrders.filter(order => 
+          order.status === 'shipped' || 
+          order.status === 'out_for_delivery' ||
+          order.status === 'processing'
+        );
+      case 'pending':
+        return allOrders.filter(order => 
+          order.status === 'pending' || 
+          order.status === 'confirmed'
+        );
+      default:
+        return allOrders;
+    }
+  }, [allOrders, filterStatus]);
 
   // Upload payment proof mutation
   const {
@@ -95,6 +119,26 @@ export const OrdersPageWithApi: React.FC = () => {
     return statusMap[status]?.[lang as 'en' | 'ar'] || status;
   };
 
+  const getOrderStatusColor = (status: string) => {
+    switch (status) {
+      case 'pending':
+      case 'confirmed':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'processing':
+        return 'bg-blue-100 text-blue-800';
+      case 'shipped':
+      case 'out_for_delivery':
+        return 'bg-purple-100 text-purple-800';
+      case 'delivered':
+        return 'bg-green-100 text-green-800';
+      case 'cancelled':
+      case 'returned':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
   const handleFileUpload = async (orderId: number, file: File) => {
     setUploadingProof(orderId);
     await executeUpload({
@@ -143,8 +187,55 @@ export const OrdersPageWithApi: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Refresh Button */}
-        <div className="flex justify-end mb-6">
+        {/* Filter and Refresh Controls */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div className="flex flex-wrap gap-2">
+            <GlassButton
+              onClick={() => setFilterStatus('all')}
+              variant={filterStatus === 'all' ? 'primary' : 'secondary'}
+              className="text-sm"
+            >
+              {lang === 'ar' ? 'جميع الطلبات' : 'All Orders'}
+              {allOrders && <span className="ml-1">({allOrders.length})</span>}
+            </GlassButton>
+            <GlassButton
+              onClick={() => setFilterStatus('pending')}
+              variant={filterStatus === 'pending' ? 'primary' : 'secondary'}
+              className="text-sm"
+            >
+              {lang === 'ar' ? 'قيد الانتظار' : 'Pending'}
+              {allOrders && (
+                <span className="ml-1">
+                  ({allOrders.filter(o => o.status === 'pending' || o.status === 'confirmed').length})
+                </span>
+              )}
+            </GlassButton>
+            <GlassButton
+              onClick={() => setFilterStatus('in_delivery')}
+              variant={filterStatus === 'in_delivery' ? 'primary' : 'secondary'}
+              className="text-sm"
+            >
+              {lang === 'ar' ? 'قيد التوصيل' : 'In Delivery'}
+              {allOrders && (
+                <span className="ml-1">
+                  ({allOrders.filter(o => o.status === 'shipped' || o.status === 'out_for_delivery' || o.status === 'processing').length})
+                </span>
+              )}
+            </GlassButton>
+            <GlassButton
+              onClick={() => setFilterStatus('completed')}
+              variant={filterStatus === 'completed' ? 'primary' : 'secondary'}
+              className="text-sm"
+            >
+              {lang === 'ar' ? 'مكتملة' : 'Completed'}
+              {allOrders && (
+                <span className="ml-1">
+                  ({allOrders.filter(o => o.status === 'delivered').length})
+                </span>
+              )}
+            </GlassButton>
+          </div>
+          
           <GlassButton
             onClick={retryOrders}
             disabled={ordersLoading}
@@ -331,6 +422,13 @@ export const OrdersPageWithApi: React.FC = () => {
                       >
                         {selectedOrder?.id === order.id ? t('Hide Details') : t('View Details')}
                       </GlassButton>
+                      
+                      <Link to={`/track-order/${order.order_number}`}>
+                        <GlassButton variant="ghost" className="flex items-center gap-2">
+                          <Package className="h-4 w-4" />
+                          {lang === 'ar' ? 'تتبع الطلب' : 'Track Order'}
+                        </GlassButton>
+                      </Link>
                       
                       {order.can_be_cancelled && (
                         <GlassButton variant="ghost" className="text-red-600 hover:text-red-700">
