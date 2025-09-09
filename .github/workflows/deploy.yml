@@ -236,14 +236,68 @@ jobs:
     
     steps:
     - name: Notify deployment status
-      uses: 8398a7/action-slack@v3
-      if: always()
-      with:
-        status: ${{ job.status }}
-        text: |
-          Deployment ${{ job.status }}!
-          Repository: ${{ github.repository }}
-          Branch: ${{ github.ref }}
-          Commit: ${{ github.sha }}
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        if [ -n "$SLACK_WEBHOOK_URL" ]; then
+          # Determine overall status
+          if [ "${{ needs.deploy-staging.result }}" = "success" ] || [ "${{ needs.deploy-production.result }}" = "success" ]; then
+            STATUS="✅ Success"
+            COLOR="good"
+          elif [ "${{ needs.deploy-staging.result }}" = "failure" ] || [ "${{ needs.deploy-production.result }}" = "failure" ]; then
+            STATUS="❌ Failed"
+            COLOR="danger"
+          else
+            STATUS="⚪ Completed"
+            COLOR="warning"
+          fi
+          
+          # Create Slack payload
+          PAYLOAD=$(cat <<EOF
+          {
+            "attachments": [
+              {
+                "color": "$COLOR",
+                "blocks": [
+                  {
+                    "type": "header",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "🚀 Soleva Platform - Deployment Notification"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Status:*\n$STATUS"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Repository:*\n${{ github.repository }}"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Branch:*\n${{ github.ref_name }}"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Commit:*\n${{ github.sha }}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+          EOF
+          )
+          
+          # Send to Slack
+          curl -X POST -H 'Content-type: application/json' \
+               --data "$PAYLOAD" \
+               "$SLACK_WEBHOOK_URL"
+        else
+          echo "⚠️ SLACK_WEBHOOK_URL secret not configured - notification skipped"
+        fi

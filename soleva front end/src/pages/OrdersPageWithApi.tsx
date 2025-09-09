@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Package, Clock, CheckCircle, XCircle, Upload, Eye } from 'lucide-react';
 import { useLang, useTranslation } from '../contexts/LangContext';
@@ -176,9 +177,11 @@ export const OrdersPageWithApi: React.FC = () => {
                   : "You haven't placed any orders yet. Start shopping now!"
                 }
               </p>
-              <GlassButton href="/products" variant="primary">
-                {t('Start Shopping')}
-              </GlassButton>
+              <Link to="/products">
+                <GlassButton variant="primary">
+                  {t('Start Shopping')}
+                </GlassButton>
+              </Link>
             </GlassCard>
           </motion.div>
         ) : (
@@ -242,7 +245,7 @@ export const OrdersPageWithApi: React.FC = () => {
                     </div>
 
                     {/* Payment Proof Upload */}
-                    {order.requires_payment_proof && !order.has_payment_proof && (
+                    {order.payment_status === 'pending' && (!order.payment_proofs || order.payment_proofs.length === 0) && (
                       <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
                         <div className="flex items-start gap-3">
                           <Upload className="h-5 w-5 text-orange-500 mt-0.5" />
@@ -301,7 +304,7 @@ export const OrdersPageWithApi: React.FC = () => {
                     )}
 
                     {/* Payment Proof Status */}
-                    {order.has_payment_proof && (
+                    {order.payment_proofs && order.payment_proofs.length > 0 && (
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                         <div className="flex items-center gap-3">
                           <CheckCircle className="h-5 w-5 text-blue-500" />
@@ -310,7 +313,7 @@ export const OrdersPageWithApi: React.FC = () => {
                               {t('Payment Proof Uploaded')}
                             </h4>
                             <p className="text-sm text-blue-700">
-                              {order.payment_proof_status === 'verified' 
+                              {order.payment_status === 'payment_approved' 
                                 ? (lang === 'ar' ? 'تم التحقق من الدفع' : 'Payment verified')
                                 : (lang === 'ar' ? 'في انتظار التحقق' : 'Awaiting verification')
                               }

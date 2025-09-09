@@ -196,7 +196,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     if (isFav) {
       return await removeFromFavorites(productId);
     } else {
-      return await addToFavorites(productId, triggerElement, productImage);
+      return await addToFavorites(productId);
     }
   };
 

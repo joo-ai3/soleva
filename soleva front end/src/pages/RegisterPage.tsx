@@ -106,11 +106,11 @@ export default function RegisterPage() {
         if (data.message?.includes('already exists')) {
           setErrors({ email: 'An account with this email already exists' });
         } else {
-          showToast(data.message || 'Failed to send verification code', 'error');
+          showToast(data.message || 'Failed to send verification code');
         }
       }
       } catch {
-      showToast('Network error. Please check your connection.', 'error');
+      showToast('Network error. Please check your connection.');
     } finally {
       setIsLoading(false);
     }
@@ -138,13 +138,13 @@ export default function RegisterPage() {
       const data = await response.json();
       
       if (data.success) {
-        showToast('Registration completed successfully!', 'success');
+        showToast('Registration completed successfully!');
         navigate('/login?message=Registration completed successfully. Please log in.');
       } else {
-        showToast(data.message || 'Registration failed', 'error');
+        showToast(data.message || 'Registration failed');
       }
       } catch {
-      showToast('Network error. Please try again.', 'error');
+      showToast('Network error. Please try again.');
     } finally {
       setIsLoading(false);
     }

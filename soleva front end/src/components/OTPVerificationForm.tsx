@@ -96,12 +96,12 @@ export default function OTPVerificationForm({
         showToast('Verification code sent successfully!');
       } else {
         setError(data.message || 'Failed to send verification code');
-        showToast(data.message || 'Failed to send verification code', 'error');
+        showToast(data.message || 'Failed to send verification code');
       }
     } catch {
       const errorMessage = 'Network error. Please check your connection.';
       setError(errorMessage);
-      showToast(errorMessage, 'error');
+      showToast(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -132,12 +132,12 @@ export default function OTPVerificationForm({
         showToast('Verification code resent successfully!');
       } else {
         setError(data.message || 'Failed to resend verification code');
-        showToast(data.message || 'Failed to resend verification code', 'error');
+        showToast(data.message || 'Failed to resend verification code');
       }
     } catch {
       const errorMessage = 'Network error. Please check your connection.';
       setError(errorMessage);
-      showToast(errorMessage, 'error');
+      showToast(errorMessage);
     } finally {
       setIsResending(false);
     }
@@ -165,7 +165,7 @@ export default function OTPVerificationForm({
       
       if (data.success) {
         setSuccess(true);
-        showToast('Verification successful!', 'success');
+        showToast('Verification successful!');
         setTimeout(() => {
           onVerificationSuccess(data.otp_request_id);
         }, 1000);
@@ -175,13 +175,13 @@ export default function OTPVerificationForm({
         if (data.otp_status) {
           setOtpStatus(data.otp_status);
         }
-        showToast(data.message || 'Invalid verification code', 'error');
+        showToast(data.message || 'Invalid verification code');
       }
     } catch {
       const errorMessage = 'Network error. Please check your connection.';
       setError(errorMessage);
       setOtpCode('');
-      showToast(errorMessage, 'error');
+      showToast(errorMessage);
     } finally {
       setIsLoading(false);
     }

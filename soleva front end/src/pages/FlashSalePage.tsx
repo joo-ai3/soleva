@@ -384,7 +384,7 @@ export default function FlashSalePage() {
 
                     {/* Add to Cart */}
                     <GlassButton
-                      onClick={() => handleAddToCart(product.product, product.discounted_price)}
+                      onClick={() => handleAddToCart(product.product)}
                       disabled={!product.is_available || isUpdating}
                       className={`w-full ${
                         product.is_available 

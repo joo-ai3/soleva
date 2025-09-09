@@ -226,7 +226,7 @@ class ApiService {
         data: response.data,
         success: true
       };
-    } catch {
+    } catch (error) {
       return {
         data: null as T,
         success: false,
@@ -242,7 +242,7 @@ class ApiService {
         data: response.data,
         success: true
       };
-    } catch {
+    } catch (error) {
       return {
         data: null as T,
         success: false,
@@ -258,7 +258,7 @@ class ApiService {
         data: response.data,
         success: true
       };
-    } catch {
+    } catch (error) {
       return {
         data: null as T,
         success: false,
@@ -274,7 +274,7 @@ class ApiService {
         data: response.data,
         success: true
       };
-    } catch {
+    } catch (error) {
       return {
         data: null as T,
         success: false,
@@ -290,7 +290,7 @@ class ApiService {
         data: response.data,
         success: true
       };
-    } catch {
+    } catch (error) {
       return {
         data: null as T,
         success: false,
