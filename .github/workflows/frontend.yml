@@ -24,13 +24,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: 'soleva front end/package-lock.json'
+          # Disable cache since package-lock.json might not exist
+          # cache: 'npm'
+          # cache-dependency-path: 'soleva front end/package-lock.json'
       
       - name: Install dependencies
         run: |
-          # Try npm ci first, fallback to npm install if cache issues occur
-          npm ci || (npm cache clean --force && npm install)
+          # Check if package-lock.json exists, use npm ci if it does, otherwise use npm install
+          if [ -f "package-lock.json" ]; then
+            echo "Found package-lock.json, using npm ci"
+            npm ci
+          else
+            echo "No package-lock.json found, using npm install"
+            npm install
+          fi
           # Explicitly install rollup with native dependencies to avoid Linux binary issues
           npm install rollup@latest
         env:
