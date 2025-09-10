@@ -1,5 +1,5 @@
 # Multi-stage build for React Frontend
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -7,8 +7,9 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install dependencies (no lockfile required) and ensure native modules build
+ENV npm_config_build_from_source=true
+RUN npm install && npm install rollup@latest
 
 # Copy source code
 COPY . .
