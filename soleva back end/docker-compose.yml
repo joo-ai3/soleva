@@ -38,27 +38,19 @@ services:
       - REDIS_URL=redis://redis:6379/1
       - CELERY_BROKER_URL=redis://redis:6379/0
 
-  niginx:
+  nginx:
     image: nginx:alpine
     container_name: nginx-proxy
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx/conf.d/default.conf:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - webroot:/var/www/html
-      depends_on:
-        - app
-        network:
-          - solevaeg-app-network
-          networks:
-            - solevaeg-app-network
-            driver: bridge
-            volumes:
-              postgres_data:
-              webroot:
     depends_on:
       - web
+    networks:
+      - solevaeg-app-network
 
   celery:
     build: .
@@ -94,29 +86,26 @@ services:
       - REDIS_URL=redis://redis:6379/1
       - CELERY_BROKER_URL=redis://redis:6379/0
 
-volumes:
-  postgres_data:
-  redis_data:
-
-certbot:
+  certbot:
     image: certbot/certbot
     container_name: certbot
     volumes:
       - ./certbot-etc:/etc/letsencrypt
       - ./certbot-var:/var/lib/letsencrypt
       - webroot:/var/www/html
-       -depends_on:
-        - nginx
-command: certonly --webroot --webroot-path=/var/www/html --email support@solevaeg.com --agree-tos --no-eff-email --non-interactive --keep-until-expiring -d solevaeg.com
+    depends_on:
+      - nginx
+    command: certonly --webroot --webroot-path=/var/www/html --email support@solevaeg.com --agree-tos --no-eff-email --non-interactive --keep-until-expiring -d solevaeg.com
+    networks:
+      - solevaeg-app-network
 
+volumes:
+  postgres_data:
+  redis_data:
+  webroot:
+  certbot-etc:
+  certbot-var:
 
-  network:
-    solevaeg-app-network:
-      driver: bridge
-
-      volumes:
-        postgres_data:
-        webroot:
-        certbot-etc:
-        certbot-var:
-      
+networks:
+  solevaeg-app-network:
+    driver: bridge
