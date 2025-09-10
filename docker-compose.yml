@@ -191,6 +191,8 @@ services:
       - VITE_FACEBOOK_PIXEL_ID=${FACEBOOK_PIXEL_ID}
       - VITE_TIKTOK_PIXEL_ID=${TIKTOK_PIXEL_ID}
       - VITE_SNAPCHAT_PIXEL_ID=${SNAPCHAT_PIXEL_ID}
+    volumes:
+      - frontend_build:/usr/share/nginx/html
     networks:
       - soleva_network
     healthcheck:
@@ -213,6 +215,7 @@ services:
       - ./nginx/ssl:/etc/nginx/ssl:ro
       - static_volume:/var/www/static:ro
       - media_volume:/var/www/media:ro
+      - frontend_build:/var/www/html:ro
       - nginx_logs:/var/log/nginx
       - certbot_webroot:/var/www/certbot:ro
       - letsencrypt_certs:/etc/letsencrypt:ro
@@ -237,11 +240,29 @@ services:
       - letsencrypt_certs:/etc/letsencrypt
       - certbot_webroot:/var/www/certbot
       - certbot_logs:/var/log/letsencrypt
-    command: certonly --webroot --webroot-path=/var/www/certbot --email ${SSL_EMAIL} --agree-tos --no-eff-email -d ${DOMAIN} -d www.${DOMAIN}
+    command: certonly --webroot --webroot-path=/var/www/certbot --email ${SSL_EMAIL} --agree-tos --no-eff-email --non-interactive --keep-until-expiring -d ${DOMAIN} -d www.${DOMAIN}
     depends_on:
       - nginx
     networks:
       - soleva_network
+    restart: "no"
+
+  # SSL Certificate Renewal (runs periodically)
+  certbot-renew:
+    image: certbot/certbot
+    container_name: soleva_certbot_renew
+    volumes:
+      - letsencrypt_certs:/etc/letsencrypt
+      - certbot_webroot:/var/www/certbot
+      - certbot_logs:/var/log/letsencrypt
+    command: renew --quiet --no-self-upgrade
+    depends_on:
+      - nginx
+    networks:
+      - soleva_network
+    restart: "no"
+    profiles:
+      - renewal
 
 # Named Volumes for Data Persistence
 volumes:
@@ -252,6 +273,8 @@ volumes:
   static_volume:
     driver: local
   media_volume:
+    driver: local
+  frontend_build:
     driver: local
   backend_logs:
     driver: local
