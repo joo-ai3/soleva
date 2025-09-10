@@ -179,7 +179,10 @@ services:
       - VITE_TIKTOK_PIXEL_ID=${TIKTOK_PIXEL_ID}
       - VITE_SNAPCHAT_PIXEL_ID=${SNAPCHAT_PIXEL_ID}
     volumes:
-      - frontend_build:/usr/share/nginx/html
+      - frontend_build:/usr/share/nginx/html   # يخزن build النهائي
+    depends_on:
+      backend:
+        condition: service_healthy
     networks:
       - soleva_network
     healthcheck:
