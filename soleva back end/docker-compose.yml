@@ -115,6 +115,8 @@ command: certonly --webroot --webroot-path=/var/www/html --email support@solevae
       driver: bridge
 
       volumes:
+        postgres_data:
+        webroot:
         certbot-etc:
         certbot-var:
       
