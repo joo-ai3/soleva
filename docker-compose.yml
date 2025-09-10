@@ -82,7 +82,7 @@ services:
     restart: unless-stopped
     env_file:
       - docker.env
-    command: celery -A soleva_app worker -l info --concurrency=4
+    command: celery -A soleva_backend worker -l info --concurrency=4
     depends_on:
       backend:
         condition: service_healthy
@@ -106,7 +106,7 @@ services:
     restart: unless-stopped
     env_file:
       - docker.env
-    command: celery -A soleva_app beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    command: celery -A soleva_backend beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     depends_on:
       backend:
         condition: service_healthy
