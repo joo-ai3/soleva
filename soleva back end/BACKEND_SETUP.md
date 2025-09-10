@@ -179,7 +179,7 @@ soleva back end/
 # Django Settings
 SECRET_KEY=your-secret-key-here
 DEBUG=True
-ALLOWED_HOSTS=localhost,127.0.0.1,thesoleva.com
+ALLOWED_HOSTS=localhost,127.0.0.1,solevaeg.com
 
 # Database
 DB_NAME=soleva_db
@@ -199,7 +199,7 @@ EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_HOST_USER=your-email@gmail.com
 EMAIL_HOST_PASSWORD=your-app-password
-DEFAULT_FROM_EMAIL=noreply@thesoleva.com
+DEFAULT_FROM_EMAIL=noreply@solevaeg.com
 
 # Payment Gateways
 PAYMOB_API_KEY=your-paymob-api-key

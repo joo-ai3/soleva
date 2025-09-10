@@ -149,7 +149,7 @@ class PDFInvoiceGenerator:
         <para align="center">
         شكراً لتسوقك معنا | Thank you for shopping with us<br/>
         <b>SOLEVA</b> - Premium Products<br/>
-        Website: thesoleva.com | Email: info@thesoleva.com
+        Website: solevaeg.com | Email: info@solevaeg.com
         </para>
         """
         story.append(Paragraph(footer_text, styles['Normal']))

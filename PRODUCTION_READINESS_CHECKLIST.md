@@ -150,7 +150,7 @@ This comprehensive checklist ensures the Soleva e-commerce platform is fully pre
 ## 🌐 Production Environment
 
 ### Domain & SSL
-- [x] **Primary Domain**: thesoleva.com as canonical domain
+- [x] **Primary Domain**: solevaeg.com as canonical domain
 - [x] **Domain Redirects**: 301 redirects from alternate domains
 - [x] **SSL Certificate**: Let's Encrypt with auto-renewal
 - [x] **HTTPS Enforcement**: Force HTTPS for all traffic

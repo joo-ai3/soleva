@@ -224,15 +224,15 @@ import os
 User = get_user_model()
 
 # Check if superuser already exists
-if not User.objects.filter(email='admin@thesoleva.com').exists():
+if not User.objects.filter(email='admin@solevaeg.com').exists():
     User.objects.create_superuser(
-        email='admin@thesoleva.com',
+        email='admin@solevaeg.com',
         password=os.environ.get('ADMIN_PASSWORD', 'S0l3v@_Admin!2025#'),
         first_name='Admin',
         last_name='User'
     )
     print('Superuser created successfully')
-    print('Email: admin@thesoleva.com')
+    print('Email: admin@solevaeg.com')
     print('Password: ' + os.environ.get('ADMIN_PASSWORD', 'S0l3v@_Admin!2025#'))
 else:
     print('Superuser already exists')
@@ -302,7 +302,7 @@ function Show-Summary {
     Write-Status "Access your application:"
     Write-Host "  • Backend API: http://localhost:8000/api/"
     Write-Host "  • Admin Panel: http://localhost/admin/"
-    Write-Host "  • Superuser Email: admin@thesoleva.com"
+    Write-Host "  • Superuser Email: admin@solevaeg.com"
     Write-Host "  • Superuser Password: S0l3v@_Admin!2025#"
 
     Write-Host ""
@@ -355,7 +355,7 @@ function Main {
         Write-Host "4. Start backend container"
         Write-Host "5. Run: python manage.py makemigrations"
         Write-Host "6. Run: python manage.py migrate"
-        Write-Host "7. Create superuser: admin@thesoleva.com"
+        Write-Host "7. Create superuser: admin@solevaeg.com"
         Write-Host ""
         Write-Warning "⚠️  This would DELETE ALL existing data!"
         return

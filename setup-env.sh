@@ -69,7 +69,7 @@ SNAPCHAT_PIXEL_ID=dev-snapchat-pixel-id
 # =======================================
 # Admin Configuration
 # =======================================
-ADMIN_PASSWORD=S0l3v@_Admin!2025#
+ADMIN_PASSWORD=?3aeeSjqq
 
 # =======================================
 # Security (Development keys)

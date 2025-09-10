@@ -159,9 +159,9 @@ show_status() {
     
     echo ""
     echo "🔗 Service URLs:"
-    echo "Frontend: https://thesoleva.com"
-    echo "Backend API: https://thesoleva.com/api"
-    echo "Admin Panel: https://thesoleva.com/admin"
+    echo "Frontend: https://solevaeg.com"
+    echo "Backend API: https://solevaeg.com/api"
+    echo "Admin Panel: https://solevaeg.com/admin"
     
     echo ""
     echo "📋 Quick Commands:"

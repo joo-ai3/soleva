@@ -70,15 +70,15 @@ from django.contrib.auth import get_user_model
 import os
 
 User = get_user_model()
-if not User.objects.filter(email='admin@thesoleva.com').exists():
+if not User.objects.filter(email='admin@solevaeg.com').exists():
     User.objects.create_superuser(
-        email='admin@thesoleva.com',
+        email='admin@solevaeg.com',
         password=os.environ.get('ADMIN_PASSWORD', 'S0l3v@_Admin!2025#'),
         first_name='Admin',
         last_name='User'
     )
     print('✅ Superuser created successfully!')
-    print('Email: admin@thesoleva.com')
+    print('Email: admin@solevaeg.com')
     print('Password: ' + os.environ.get('ADMIN_PASSWORD', 'S0l3v@_Admin!2025#'))
 else:
     print('ℹ️  Superuser already exists')
@@ -113,7 +113,7 @@ echo "🌐 Access URLs:"
 echo "• Frontend: http://localhost"
 echo "• Admin: http://localhost/admin/"
 echo "• API: http://localhost/api/"
-echo "• Superuser: admin@thesoleva.com"
+echo "• Superuser: admin@solevaeg.com"
 
 echo ""
 echo "⚠️  IMPORTANT:"

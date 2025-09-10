@@ -52,9 +52,9 @@ from django.contrib.auth import get_user_model
 import os
 
 User = get_user_model()
-if not User.objects.filter(email='admin@thesoleva.com').exists():
+if not User.objects.filter(email='admin@solevaeg.com').exists():
     User.objects.create_superuser(
-        email='admin@thesoleva.com',
+        email='admin@solevaeg.com',
         password=os.environ.get('ADMIN_PASSWORD', 'S0l3v@_Admin!2025#'),
         first_name='Admin',
         last_name='User'
@@ -77,7 +77,7 @@ echo "🎉 BACKEND FIX COMPLETED!"
 echo "========================"
 echo ""
 echo "✅ Database reset and migrations applied"
-echo "✅ Superuser created: admin@thesoleva.com"
+echo "✅ Superuser created: admin@solevaeg.com"
 echo "✅ All services should be running now"
 echo ""
 echo "📊 Check status:"

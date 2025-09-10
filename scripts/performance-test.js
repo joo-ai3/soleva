@@ -8,8 +8,8 @@ const { performance } = require('perf_hooks');
 
 // Configuration
 const CONFIG = {
-  baseUrl: process.env.TEST_BASE_URL || 'https://thesoleva.com',
-  apiUrl: process.env.TEST_API_URL || 'https://thesoleva.com/api',
+  baseUrl: process.env.TEST_BASE_URL || 'https://solevaeg.com',
+  apiUrl: process.env.TEST_API_URL || 'https://solevaeg.com/api',
   concurrent: parseInt(process.env.CONCURRENT_USERS) || 10,
   duration: parseInt(process.env.TEST_DURATION) || 60, // seconds
   rampUp: parseInt(process.env.RAMP_UP_TIME) || 10, // seconds

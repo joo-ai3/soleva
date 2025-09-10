@@ -392,7 +392,7 @@ const CartPage: React.FC = () => {
 
 ### Environment Variables
 ```env
-VITE_API_BASE_URL=https://thesoleva.com/api
+VITE_API_BASE_URL=https://solevaeg.com/api
 VITE_API_TIMEOUT=30000
 VITE_RETRY_ATTEMPTS=3
 VITE_RETRY_DELAY=1000

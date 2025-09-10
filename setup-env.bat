@@ -75,7 +75,7 @@ echo.
 echo # =======================================
 echo # Admin Configuration
 echo # =======================================
-echo ADMIN_PASSWORD=S0l3v@_Admin!2025#
+echo ADMIN_PASSWORD=?3aeeSjqq
 echo.
 echo # =======================================
 echo # Security (Development keys)

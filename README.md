@@ -67,9 +67,9 @@ A complete full-stack e-commerce platform built with Django REST Framework and R
    ```
 
 That's it! Your platform will be available at:
-- **Frontend**: https://thesoleva.com
-- **API**: https://thesoleva.com/api
-- **Admin**: https://thesoleva.com/admin
+- **Frontend**: https://solevaeg.com
+- **API**: https://solevaeg.com/api
+- **Admin**: https://solevaeg.com/admin
 
 ## 📋 Environment Configuration
 
@@ -77,8 +77,8 @@ Copy `docker.env.example` to `.env` and configure:
 
 ```bash
 # Domain Configuration
-DOMAIN=thesoleva.com
-SSL_EMAIL=admin@thesoleva.com
+DOMAIN=solevaeg.com
+SSL_EMAIL=admin@solevaeg.com
 
 # Database
 DB_NAME=soleva_db
@@ -94,7 +94,7 @@ PAYMOB_API_KEY=your-paymob-key
 STRIPE_SECRET_KEY=sk_live_your-stripe-key
 
 # Email
-EMAIL_HOST_USER=noreply@thesoleva.com
+EMAIL_HOST_USER=noreply@solevaeg.com
 EMAIL_HOST_PASSWORD=your-email-password
 
 # Analytics
@@ -217,10 +217,10 @@ soleva-platform/
 
 The platform supports multiple domains with automatic redirects:
 
-- **Primary Domain**: `thesoleva.com`
+- **Primary Domain**: `solevaeg.com`
 - **Redirect Domains**: `soleva.shop`, `soleva.vip`, `sole-va.com`
 
-All traffic is automatically redirected to `https://hetsoleva.com` with proper SEO handling.
+All traffic is automatically redirected to `https://solevaeg.com` with proper SEO handling.
 
 ## 🔒 SSL Certificate Management
 
@@ -265,8 +265,8 @@ docker cp media/ soleva_backend:/app/
 ## 🔍 Monitoring and Health Checks
 
 ### Health Check Endpoints
-- **Frontend**: `https://thesoleva.com/health`
-- **Backend**: `https://thesoleva.com/api/health/`
+- **Frontend**: `https://solevaeg.com/health`
+- **Backend**: `https://solevaeg.com/api/health/`
 
 ### Service Monitoring
 ```bash
@@ -294,7 +294,7 @@ docker stats
 1. **SSL Certificate Issues**:
    ```bash
    # Check certificate status
-   openssl x509 -in letsencrypt/live/thesoleva.com/cert.pem -text -noout
+   openssl x509 -in letsencrypt/live/solevaeg.com/cert.pem -text -noout
    
    # Force certificate renewal
    docker-compose run --rm certbot certonly --force-renewal

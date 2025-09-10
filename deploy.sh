@@ -229,7 +229,7 @@ show_status() {
     
     echo ""
     log "🎉 Deployment completed successfully!"
-    echo "🌐 Your site should be available at: https://thesoleva.com"
+    echo "🌐 Your site should be available at: https://solevaeg.com"
 }
 
 # Main deployment process

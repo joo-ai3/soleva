@@ -159,9 +159,9 @@ from django.contrib.auth import get_user_model
 import os
 
 User = get_user_model()
-if not User.objects.filter(email='admin@thesoleva.com').exists():
+if not User.objects.filter(email='admin@solevaeg.com').exists():
     User.objects.create_superuser(
-        email='admin@thesoleva.com',
+        email='admin@solevaeg.com',
         password=os.environ.get('ADMIN_PASSWORD', 'S0l3v@_Admin!2025#'),
         first_name='Admin',
         last_name='User'
@@ -229,7 +229,7 @@ Write-Host "🌐 Access URLs:" -ForegroundColor Cyan
 Write-Host "• Frontend: http://localhost" -ForegroundColor White
 Write-Host "• Admin: http://localhost/admin/" -ForegroundColor White
 Write-Host "• API: http://localhost/api/" -ForegroundColor White
-Write-Host "• Superuser: admin@thesoleva.com" -ForegroundColor White
+Write-Host "• Superuser: admin@solevaeg.com" -ForegroundColor White
 
 Write-Host "" -ForegroundColor White
 Write-Host "⚠️  Note: All previous data was removed during database reset" -ForegroundColor Yellow

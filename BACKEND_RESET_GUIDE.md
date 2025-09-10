@@ -230,7 +230,7 @@ docker compose exec backend python manage.py check
 ### Access Credentials (After Fix)
 - **Admin URL:** http://localhost/admin/
 - **API Base:** http://localhost:8000/api/
-- **Superuser Email:** admin@thesoleva.com
+- **Superuser Email:** admin@solevaeg.com
 - **Superuser Password:** S0l3v@_Admin!2025#
 
 ### Useful Commands

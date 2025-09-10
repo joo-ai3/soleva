@@ -81,9 +81,9 @@ python manage.py shell << EOF 2>/dev/null || log "Superuser creation check faile
 try:
     from django.contrib.auth import get_user_model
     User = get_user_model()
-    if not User.objects.filter(email='admin@thesoleva.com').exists():
+    if not User.objects.filter(email='admin@solevaeg.com').exists():
         User.objects.create_superuser(
-            email='admin@thesoleva.com',
+            email='admin@solevaeg.com',
             password='${ADMIN_PASSWORD}',
             first_name='Admin',
             last_name='User'

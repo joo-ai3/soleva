@@ -141,11 +141,11 @@ chmod +x scripts/*.sh
 docker-compose run --rm certbot certonly \
   --webroot \
   --webroot-path=/var/www/certbot \
-  --email admin@thesoleva.com \
+  --email admin@solevaeg.com \
   --agree-tos \
   --no-eff-email \
-  -d thesoleva.com \
-  -d www.thesoleva.com
+  -d solevaeg.com \
+  -d www.solevaeg.com
 ```
 
 ### Manual Certificate Renewal
@@ -287,19 +287,19 @@ echo "DEBUG=True" >> .env
 ## 🌐 Domain Configuration
 
 ### Primary Domain Setup
-1. Point DNS A record: `thesoleva.com` → Your server IP
-2. Point DNS A record: `www.thesoleva.com` → Your server IP
+1. Point DNS A record: `solevaeg.com` → Your server IP
+2. Point DNS A record: `www.solevaeg.com` → Your server IP
 
 ### Redirect Domains
 All alternate domains redirect to primary:
-- `soleva.shop` → `https://thesoleva.com`
-- `soleva.vip` → `https://thesoleva.com`
-- `sole-va.com` → `https://thesoleva.com`
+- `soleva.shop` → `https://solevaeg.com`
+- `soleva.vip` → `https://solevaeg.com`
+- `sole-va.com` → `https://solevaeg.com`
 
 ### DNS Configuration Example
 ```
-A     thesoleva.com         YOUR_SERVER_IP
-A     www.thesoleva.com     YOUR_SERVER_IP
+A     solevaeg.com         YOUR_SERVER_IP
+A     www.solevaeg.com     YOUR_SERVER_IP
 A     soleva.shop           YOUR_SERVER_IP
 A     www.soleva.shop       YOUR_SERVER_IP
 A     soleva.vip            YOUR_SERVER_IP
@@ -315,10 +315,10 @@ A     www.sole-va.com       YOUR_SERVER_IP
 **1. SSL Certificate Fails**
 ```bash
 # Check DNS propagation
-dig thesoleva.com
+dig solevaeg.com
 
 # Test port 80 accessibility
-curl -I http://thesoleva.com/.well-known/acme-challenge/test
+curl -I http://solevaeg.com/.well-known/acme-challenge/test
 
 # View certbot logs
 docker-compose logs certbot

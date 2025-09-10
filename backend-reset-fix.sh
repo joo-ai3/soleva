@@ -204,15 +204,15 @@ import os
 User = get_user_model()
 
 # Check if superuser already exists
-if not User.objects.filter(email='admin@thesoleva.com').exists():
+if not User.objects.filter(email='admin@solevaeg.com').exists():
     User.objects.create_superuser(
-        email='admin@thesoleva.com',
+        email='admin@solevaeg.com',
         password=os.environ.get('ADMIN_PASSWORD', 'S0l3v@_Admin!2025#'),
         first_name='Admin',
         last_name='User'
     )
     print('✅ Superuser created successfully')
-    print('Email: admin@thesoleva.com')
+    print('Email: admin@solevaeg.com')
     print('Password: ' + os.environ.get('ADMIN_PASSWORD', 'S0l3v@_Admin!2025#'))
 else:
     print('ℹ️  Superuser already exists')
@@ -280,7 +280,7 @@ show_summary() {
     print_status "Access your application:"
     echo "  • Backend API: http://localhost:8000/api/"
     echo "  • Admin Panel: http://localhost/admin/"
-    echo "  • Superuser Email: admin@thesoleva.com"
+    echo "  • Superuser Email: admin@solevaeg.com"
     echo "  • Superuser Password: S0l3v@_Admin!2025#"
 
     echo ""
@@ -336,7 +336,7 @@ main() {
         echo "4. Start backend container"
         echo "5. Run: python manage.py makemigrations"
         echo "6. Run: python manage.py migrate"
-        echo "7. Create superuser: admin@thesoleva.com"
+        echo "7. Create superuser: admin@solevaeg.com"
         echo ""
         print_warning "⚠️  This would DELETE ALL existing data!"
         return

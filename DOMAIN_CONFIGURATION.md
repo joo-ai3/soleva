@@ -1,25 +1,25 @@
 # Domain Configuration Guide for Soleva Platform
 
 ## Overview
-This guide covers the complete domain setup for the Soleva e-commerce platform with `thesoleva.com` as the primary domain and proper redirects from all alternate domains.
+This guide covers the complete domain setup for the Soleva e-commerce platform with `solevaeg.com` as the primary domain and proper redirects from all alternate domains.
 
 ## Domain Structure
 
 ### Primary Domain
-- **thesoleva.com** - Main website
-  - Frontend: `https://thesoleva.com`
-  - Backend API: `https://thesoleva.com/api`
-  - Admin Panel: `https://thesoleva.com/admin`
+- **solevaeg.com** - Main website
+  - Frontend: `https://solevaeg.com`
+  - Backend API: `https://solevaeg.com/api`
+  - Admin Panel: `https://solevaeg.com/admin`
 
 ### Redirect Domains (301 Redirects to Primary)
-- `www.thesoleva.com` → `https://thesoleva.com`
-- `soleva.shop` → `https://thesoleva.com`
-- `soleva.vip` → `https://thesoleva.com`
-- `sole-va.com` → `https://thesoleva.com`
+- `www.solevaeg.com` → `https://solevaeg.com`
+- `soleva.shop` → `https://solevaeg.com`
+- `soleva.vip` → `https://solevaeg.com`
+- `sole-va.com` → `https://solevaeg.com`
 
 ## DNS Configuration
 
-### 1. Primary Domain (thesoleva.com)
+### 1. Primary Domain (solevaeg.com)
 
 #### A Records
 ```
@@ -38,7 +38,7 @@ TTL: 300
 ```
 Type: CNAME
 Name: www
-Value: thesoleva.com
+Value: solevaeg.com
 TTL: 300
 ```
 
@@ -46,7 +46,7 @@ TTL: 300
 ```
 Type: MX
 Name: @
-Value: mail.thesoleva.com
+Value: mail.solevaeg.com
 Priority: 10
 TTL: 300
 ```
@@ -62,7 +62,7 @@ TTL: 300
 # DMARC Record
 Type: TXT
 Name: _dmarc
-Value: "v=DMARC1; p=quarantine; rua=mailto:dmarc@thesoleva.com"
+Value: "v=DMARC1; p=quarantine; rua=mailto:dmarc@solevaeg.com"
 TTL: 300
 
 # Google Site Verification
@@ -103,7 +103,7 @@ TTL: 300
 sudo apt install certbot python3-certbot-nginx
 
 # Obtain certificates for all domains
-sudo certbot certonly --nginx -d thesoleva.com -d www.thesoleva.com -d soleva.shop -d www.soleva.shop -d soleva.vip -d www.soleva.vip -d sole-va.com -d www.sole-va.com
+sudo certbot certonly --nginx -d solevaeg.com -d www.solevaeg.com -d soleva.shop -d www.soleva.shop -d soleva.vip -d www.soleva.vip -d sole-va.com -d www.sole-va.com
 
 # Set up automatic renewal
 sudo crontab -e
@@ -112,14 +112,14 @@ sudo crontab -e
 
 ### Certificate Paths
 ```
-Certificate: /etc/letsencrypt/live/thesoleva.com/fullchain.pem
-Private Key: /etc/letsencrypt/live/thesoleva.com/privkey.pem
+Certificate: /etc/letsencrypt/live/solevaeg.com/fullchain.pem
+Private Key: /etc/letsencrypt/live/solevaeg.com/privkey.pem
 ```
 
 ## Nginx Configuration
 
 ### Complete Nginx Configuration
-Create `/etc/nginx/sites-available/thesoleva.com`:
+Create `/etc/nginx/sites-available/solevaeg.com`:
 
 ```nginx
 # Rate limiting zones
@@ -136,7 +136,7 @@ upstream backend {
 server {
     listen 80;
     listen [::]:80;
-    server_name thesoleva.com www.thesoleva.com soleva.shop www.soleva.shop soleva.vip www.soleva.vip sole-va.com www.sole-va.com;
+    server_name solevaeg.com www.solevaeg.com soleva.shop www.soleva.shop soleva.vip www.soleva.vip sole-va.com www.sole-va.com;
     
     # Let's Encrypt challenge
     location /.well-known/acme-challenge/ {
@@ -145,7 +145,7 @@ server {
     
     # Redirect everything else to HTTPS
     location / {
-        return 301 https://thesoleva.com$request_uri;
+        return 301 https://solevaeg.com$request_uri;
     }
 }
 
@@ -153,28 +153,28 @@ server {
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name www.thesoleva.com soleva.shop www.soleva.shop soleva.vip www.soleva.vip sole-va.com www.sole-va.com;
+    server_name www.solevaeg.com soleva.shop www.soleva.shop soleva.vip www.soleva.vip sole-va.com www.sole-va.com;
     
     # SSL Configuration
-    ssl_certificate /etc/letsencrypt/live/thesoleva.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/thesoleva.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/solevaeg.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/solevaeg.com/privkey.pem;
     
     # Include SSL settings
     include /etc/nginx/snippets/ssl-params.conf;
     
     # 301 redirect to primary domain
-    return 301 https://thesoleva.com$request_uri;
+    return 301 https://solevaeg.com$request_uri;
 }
 
-# Main server configuration for thesoleva.com
+# Main server configuration for solevaeg.com
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name thesoleva.com;
+    server_name solevaeg.com;
     
     # SSL Configuration
-    ssl_certificate /etc/letsencrypt/live/thesoleva.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/thesoleva.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/solevaeg.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/solevaeg.com/privkey.pem;
     
     # Include SSL settings
     include /etc/nginx/snippets/ssl-params.conf;
@@ -185,7 +185,7 @@ server {
     add_header X-Content-Type-Options nosniff always;
     add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://connect.facebook.net https://analytics.tiktok.com https://sc-static.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.thesoleva.com https://www.google-analytics.com https://analytics.tiktok.com; frame-src 'none';" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://connect.facebook.net https://analytics.tiktok.com https://sc-static.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.solevaeg.com https://www.google-analytics.com https://analytics.tiktok.com; frame-src 'none';" always;
     
     # Root directory
     root /var/www/soleva-platform/soleva\ front\ end/dist;
@@ -401,8 +401,8 @@ sudo openssl dhparam -out /etc/nginx/dhparam.pem 2048
 ### 1. DNS Propagation Check
 ```bash
 # Check DNS resolution
-nslookup thesoleva.com
-dig thesoleva.com
+nslookup solevaeg.com
+dig solevaeg.com
 
 # Check from multiple locations
 # Use online tools like:
@@ -413,7 +413,7 @@ dig thesoleva.com
 ### 2. SSL Certificate Verification
 ```bash
 # Check SSL certificate
-openssl s_client -connect thesoleva.com:443 -servername thesoleva.com
+openssl s_client -connect solevaeg.com:443 -servername solevaeg.com
 
 # Online SSL checker
 # Use: ssllabs.com/ssltest/
@@ -422,21 +422,21 @@ openssl s_client -connect thesoleva.com:443 -servername thesoleva.com
 ### 3. Redirect Testing
 ```bash
 # Test HTTP to HTTPS redirect
-curl -I http://thesoleva.com
+curl -I http://solevaeg.com
 
 # Test alternate domain redirects
-curl -I https://www.thesoleva.com
+curl -I https://www.solevaeg.com
 curl -I https://soleva.shop
 curl -I https://soleva.vip
 curl -I https://sole-va.com
 
-# Should all return 301 redirects to https://thesoleva.com
+# Should all return 301 redirects to https://solevaeg.com
 ```
 
 ### 4. Performance Testing
 ```bash
 # Test response times
-curl -w "@curl-format.txt" -o /dev/null -s "https://thesoleva.com"
+curl -w "@curl-format.txt" -o /dev/null -s "https://solevaeg.com"
 
 # Create curl-format.txt:
 echo "
@@ -459,7 +459,7 @@ Create `/usr/local/bin/domain-monitor.sh`:
 ```bash
 #!/bin/bash
 
-DOMAINS=("thesoleva.com" "www.thesoleva.com" "soleva.shop" "soleva.vip" "sole-va.com")
+DOMAINS=("solevaeg.com" "www.solevaeg.com" "soleva.shop" "soleva.vip" "sole-va.com")
 LOG_FILE="/var/log/domain-monitor.log"
 
 for domain in "${DOMAINS[@]}"; do
@@ -470,7 +470,7 @@ for domain in "${DOMAINS[@]}"; do
     else
         echo "$(date): ❌ $domain - FAILED ($response)" >> "$LOG_FILE"
         # Send alert (email, Slack, etc.)
-        # mail -s "Domain Alert: $domain DOWN" admin@thesoleva.com < /dev/null
+        # mail -s "Domain Alert: $domain DOWN" admin@solevaeg.com < /dev/null
     fi
 done
 ```
@@ -481,7 +481,7 @@ Create `/usr/local/bin/ssl-monitor.sh`:
 ```bash
 #!/bin/bash
 
-DOMAIN="thesoleva.com"
+DOMAIN="solevaeg.com"
 THRESHOLD=30  # Days before expiration to alert
 
 # Get certificate expiration date
@@ -497,7 +497,7 @@ days_until_expiry=$(( (expiry_timestamp - current_timestamp) / 86400 ))
 if [[ $days_until_expiry -lt $THRESHOLD ]]; then
     echo "$(date): ⚠️ SSL certificate for $DOMAIN expires in $days_until_expiry days"
     # Send alert
-    # mail -s "SSL Certificate Alert: $DOMAIN" admin@thesoleva.com
+    # mail -s "SSL Certificate Alert: $DOMAIN" admin@solevaeg.com
 else
     echo "$(date): ✅ SSL certificate for $DOMAIN is valid for $days_until_expiry more days"
 fi
@@ -582,4 +582,4 @@ sudo crontab -e
    - Performance monitoring
    - Error log monitoring
 
-This configuration ensures that thesoleva.com serves as the primary domain with proper redirects from all alternate domains, maintains security best practices, and provides optimal performance for users.
+This configuration ensures that solevaeg.com serves as the primary domain with proper redirects from all alternate domains, maintains security best practices, and provides optimal performance for users.

@@ -151,7 +151,7 @@ def check_low_stock_alert(sender, instance, created, **kwargs):
                     subject,
                     message,
                     settings.DEFAULT_FROM_EMAIL,
-                    ['inventory@thesoleva.com'],  # Configure admin emails
+                    ['inventory@solevaeg.com'],  # Configure admin emails
                     fail_silently=True,
                 )
             except Exception:

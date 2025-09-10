@@ -5,17 +5,17 @@ This guide provides comprehensive instructions for deploying the Soleva e-commer
 
 ## Domain Configuration
 
-### Primary Domain: thesoleva.com
-- **Frontend**: https://thesoleva.com
-- **Backend API**: https://thesoleva.com/api
-- **Admin Panel**: https://thesoleva.com/admin
+### Primary Domain: solevaeg.com
+- **Frontend**: https://solevaeg.com
+- **Backend API**: https://solevaeg.com/api
+- **Admin Panel**: https://solevaeg.com/admin
 
 ### Redirect Domains
-All the following domains should redirect to https://thesoleva.com:
-- soleva.shop → https://thesoleva.com
-- soleva.vip → https://thesoleva.com
-- sole-va.com → https://thesoleva.com
-- www.thesoleva.com → https://thesoleva.com
+All the following domains should redirect to https://solevaeg.com:
+- soleva.shop → https://solevaeg.com
+- soleva.vip → https://solevaeg.com
+- sole-va.com → https://solevaeg.com
+- www.solevaeg.com → https://solevaeg.com
 
 ## Server Requirements
 
@@ -110,7 +110,7 @@ Update the following values in `.env`:
 # Django Settings
 SECRET_KEY=your-super-secret-key-here
 DEBUG=False
-ALLOWED_HOSTS=localhost,127.0.0.1,thesoleva.com,www.thesoleva.com,soleva.shop,soleva.vip,sole-va.com
+ALLOWED_HOSTS=localhost,127.0.0.1,solevaeg.com,www.solevaeg.com,soleva.shop,soleva.vip,sole-va.com
 
 # Database Configuration
 DB_NAME=soleva_db
@@ -128,9 +128,9 @@ CELERY_RESULT_BACKEND=redis://127.0.0.1:6379/0
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER=noreply@thesoleva.com
+EMAIL_HOST_USER=noreply@solevaeg.com
 EMAIL_HOST_PASSWORD=your-email-password
-DEFAULT_FROM_EMAIL=noreply@thesoleva.com
+DEFAULT_FROM_EMAIL=noreply@solevaeg.com
 
 # Payment Configuration
 PAYMOB_API_KEY=your-paymob-api-key
@@ -252,7 +252,7 @@ nano .env.production
 
 Update with production values:
 ```bash
-VITE_API_BASE_URL=https://thesoleva.com/api
+VITE_API_BASE_URL=https://solevaeg.com/api
 VITE_APP_NAME=Soleva
 VITE_NODE_ENV=production
 
@@ -287,7 +287,7 @@ npm run build
 
 ### Main Nginx Configuration
 ```bash
-sudo nano /etc/nginx/sites-available/thesoleva.com
+sudo nano /etc/nginx/sites-available/solevaeg.com
 ```
 
 Add the following configuration:
@@ -295,29 +295,29 @@ Add the following configuration:
 # Redirect all HTTP to HTTPS
 server {
     listen 80;
-    server_name thesoleva.com www.thesoleva.com soleva.shop soleva.vip sole-va.com;
-    return 301 https://thesoleva.com$request_uri;
+    server_name solevaeg.com www.solevaeg.com soleva.shop soleva.vip sole-va.com;
+    return 301 https://solevaeg.com$request_uri;
 }
 
 # Redirect alternate domains to primary domain
 server {
     listen 443 ssl http2;
-    server_name www.thesoleva.com soleva.shop soleva.vip sole-va.com;
+    server_name www.solevaeg.com soleva.shop soleva.vip sole-va.com;
     
-    ssl_certificate /etc/letsencrypt/live/thesoleva.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/thesoleva.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/solevaeg.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/solevaeg.com/privkey.pem;
     
-    return 301 https://thesoleva.com$request_uri;
+    return 301 https://solevaeg.com$request_uri;
 }
 
 # Main server configuration
 server {
     listen 443 ssl http2;
-    server_name thesoleva.com;
+    server_name solevaeg.com;
 
     # SSL Configuration
-    ssl_certificate /etc/letsencrypt/live/thesoleva.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/thesoleva.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/solevaeg.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/solevaeg.com/privkey.pem;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384;
     ssl_prefer_server_ciphers off;
@@ -413,7 +413,7 @@ server {
 ### Enable Site and Test Configuration
 ```bash
 # Enable the site
-sudo ln -s /etc/nginx/sites-available/thesoleva.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/solevaeg.com /etc/nginx/sites-enabled/
 
 # Test Nginx configuration
 sudo nginx -t
@@ -430,7 +430,7 @@ sudo systemctl restart nginx
 sudo systemctl stop nginx
 
 # Obtain certificates for all domains
-sudo certbot certonly --standalone -d thesoleva.com -d www.thesoleva.com -d soleva.shop -d soleva.vip -d sole-va.com
+sudo certbot certonly --standalone -d solevaeg.com -d www.solevaeg.com -d soleva.shop -d soleva.vip -d sole-va.com
 
 # Start Nginx
 sudo systemctl start nginx
@@ -456,7 +456,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://thesoleva.com/sitemap.xml
+Sitemap: https://solevaeg.com/sitemap.xml
 
 # Disallow admin and API
 Disallow: /admin/
@@ -472,31 +472,31 @@ nano /var/www/soleva-platform/soleva\ front\ end/dist/sitemap.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://thesoleva.com/</loc>
+        <loc>https://solevaeg.com/</loc>
         <lastmod>2024-01-01</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://thesoleva.com/products</loc>
+        <loc>https://solevaeg.com/products</loc>
         <lastmod>2024-01-01</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>https://thesoleva.com/collections</loc>
+        <loc>https://solevaeg.com/collections</loc>
         <lastmod>2024-01-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://thesoleva.com/about</loc>
+        <loc>https://solevaeg.com/about</loc>
         <lastmod>2024-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://thesoleva.com/contact</loc>
+        <loc>https://solevaeg.com/contact</loc>
         <lastmod>2024-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
@@ -507,7 +507,7 @@ nano /var/www/soleva-platform/soleva\ front\ end/dist/sitemap.xml
 ### Update Frontend for Canonical URLs
 Update the main index.html to include canonical links:
 ```html
-<link rel="canonical" href="https://thesoleva.com" />
+<link rel="canonical" href="https://solevaeg.com" />
 ```
 
 ## 8. Monitoring and Logging
@@ -518,8 +518,8 @@ sudo nano /etc/logrotate.d/soleva
 ```
 
 ```
-/var/log/nginx/thesoleva.com.access.log
-/var/log/nginx/thesoleva.com.error.log
+/var/log/nginx/solevaeg.com.access.log
+/var/log/nginx/solevaeg.com.error.log
 /var/log/celery/*.log {
     daily
     missingok

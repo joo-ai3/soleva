@@ -1,5 +1,5 @@
 # Robots.txt for Soleva E-commerce Platform
-# https://thesoleva.com/robots.txt
+# https://solevaeg.com/robots.txt
 
 User-agent: *
 Allow: /
@@ -77,9 +77,9 @@ Disallow: /*.log$
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://thesoleva.com/sitemap.xml
+Sitemap: https://solevaeg.com/sitemap.xml
 
 # Additional sitemaps
-Sitemap: https://thesoleva.com/sitemap-products.xml
-Sitemap: https://thesoleva.com/sitemap-categories.xml
-Sitemap: https://thesoleva.com/sitemap-pages.xml
+Sitemap: https://solevaeg.com/sitemap-products.xml
+Sitemap: https://solevaeg.com/sitemap-categories.xml
+Sitemap: https://solevaeg.com/sitemap-pages.xml
