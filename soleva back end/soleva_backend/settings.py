@@ -37,7 +37,7 @@ if SENTRY_DSN and not DEBUG:
         import sentry_sdk
         from sentry_sdk.integrations.django import DjangoIntegration
         from sentry_sdk.integrations.celery import CeleryIntegration
-        
+
         sentry_sdk.init(
             dsn=SENTRY_DSN,
             integrations=[
