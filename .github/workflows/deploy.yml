@@ -92,14 +92,18 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: 'soleva front end/package-lock.json'
+        node-version: '22'
+        # cache: 'npm'
+        # cache-dependency-path: 'soleva front end/package-lock.json'
     
     - name: Install dependencies
       run: |
         cd "soleva front end"
-        npm ci
+        if [ -f "package-lock.json" ]; then
+          npm ci
+        else
+          npm install
+        fi
     
     - name: Run linting
       run: |
