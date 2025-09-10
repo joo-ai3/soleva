@@ -38,9 +38,9 @@ RUN adduser --disabled-password --gecos '' appuser \
 COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 RUN chmod +x /app/docker-entrypoint.sh
 
-# Health check
+# Health check - using a simple script that works with appuser
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/api/health/ || exit 1
+    CMD python manage.py check --deploy || exit 1
 
 # Switch to non-root user
 USER appuser
