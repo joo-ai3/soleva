@@ -284,8 +284,8 @@ def product_stats(request):
     # Inventory stats
     total_products = Product.objects.filter(is_active=True).count()
     in_stock = Product.objects.filter(
+        Q(track_inventory=False) | Q(track_inventory=True, inventory_quantity__gt=0),
         is_active=True,
-        Q(track_inventory=False) | Q(track_inventory=True, inventory_quantity__gt=0)
     ).count()
     
     out_of_stock = Product.objects.filter(

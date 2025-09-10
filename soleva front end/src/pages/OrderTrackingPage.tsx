@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   FiBox, FiTruck, FiCheckCircle, FiClock, FiPackage, 
-  FiMapPin, FiPhone, FiMail, FiCalendar, FiArrowLeft,
+  FiPhone, FiMail, FiCalendar, FiArrowLeft,
   FiAlertCircle, FiEye
 } from 'react-icons/fi';
 import { useLang, useTranslation } from '../contexts/LangContext';
