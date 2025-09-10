@@ -34,6 +34,10 @@ ALLOWED_HOSTS = [ 'solevaeg.com', 'www.solevaeg.com', '213.130.147.41' ]
 SENTRY_DSN = config('SENTRY_DSN', default='')
 if SENTRY_DSN and not DEBUG:
     try:
+        import sentry_sdk
+        from sentry_sdk.integrations.django import DjangoIntegration
+        from sentry_sdk.integrations.celery import CeleryIntegration
+        
         sentry_sdk.init(
             dsn=SENTRY_DSN,
             integrations=[
@@ -52,6 +56,8 @@ if SENTRY_DSN and not DEBUG:
             attach_stacktrace=True,
             environment='production',
         )
+    except ImportError:
+        print("Sentry SDK not installed, skipping Sentry initialization")
     except Exception as e:
         print(f"Sentry init failed: {e}")
 
