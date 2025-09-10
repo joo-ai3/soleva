@@ -38,6 +38,28 @@ services:
       - REDIS_URL=redis://redis:6379/1
       - CELERY_BROKER_URL=redis://redis:6379/0
 
+  niginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx/conf.d/default.conf:ro
+      - webroot:/var/www/html
+      depends_on:
+        - app
+        network:
+          - solevaeg-app-network
+          networks:
+            - solevaeg-app-network
+            driver: bridge
+            volumes:
+              postgres_data:
+              webroot:
+    depends_on:
+      - web
+
   celery:
     build: .
     command: celery -A soleva_backend worker -l info
