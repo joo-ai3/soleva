@@ -1,4 +1,76 @@
-node_modules
-dist
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# Environment files
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+docker.env
+
+# Database files
+*.sqlite3
+*.db
+
+# Logs
+*.log
+logs/
+soleva back end/logs/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# Backup files
+*.bak
+*.backup
+*.orig
+*.old
 docker-compose.yml.bak
+docker-compose.override.yml.bak
+*.yml.bak
+*.yaml.bak
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.tmp/
+
+# Static files and media
+soleva back end/staticfiles/
+soleva back end/media/
+
+# SSL certificates
+nginx/ssl/
