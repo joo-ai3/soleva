@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiX, FiInfo, FiAlertTriangle, FiCheckCircle, FiAlertCircle, FiTag, FiZap, FiMegaphone } from 'react-icons/fi';
+import { FiX, FiInfo, FiAlertTriangle, FiCheckCircle, FiAlertCircle, FiTag, FiZap, FiVolume2 } from 'react-icons/fi';
 import { useLang } from '../contexts/LangContext';
 import { NotificationBanner as NotificationBannerType, websiteManagementApi } from '../services/websiteManagementApi';
 
@@ -15,7 +15,7 @@ const bannerIcons = {
   error: FiAlertCircle,
   promotion: FiTag,
   flash_sale: FiZap,
-  announcement: FiMegaphone,
+  announcement: FiVolume2,
 };
 
 const bannerColors = {
