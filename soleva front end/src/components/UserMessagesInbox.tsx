@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  FiMail, FiMailOpen, FiStar, FiExternalLink, FiClock, 
+  FiMail, FiStar, FiExternalLink, FiClock, 
   FiTag, FiZap, FiPackage, FiHeadphones, FiHeart, 
-  FiBookOpen, FiMegaphone, FiSettings 
+  FiBookOpen, FiVolume2, FiSettings 
 } from 'react-icons/fi';
 import { useLang } from '../contexts/LangContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -18,7 +18,7 @@ const messageTypeIcons = {
   support_reply: FiHeadphones,
   welcome: FiHeart,
   newsletter: FiBookOpen,
-  announcement: FiMegaphone,
+  announcement: FiVolume2,
   system: FiSettings,
 };
 
@@ -177,7 +177,7 @@ export default function UserMessagesInbox({ className = '' }: UserMessagesInboxP
               />
             ) : (
               <div className="bg-card rounded-lg p-8 text-center">
-                <FiMailOpen size={48} className="mx-auto text-gray-400 mb-4" />
+                <FiMail size={48} className="mx-auto text-gray-400 mb-4" />
                 <p className="text-text-secondary">
                   {lang === 'ar' 
                     ? 'اختر رسالة لعرضها' 
