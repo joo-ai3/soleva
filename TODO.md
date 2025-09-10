@@ -6,6 +6,7 @@
 
 ## Tasks
 - [x] Fix sentry_sdk import issue in settings.py
+- [x] Rebuild Docker image with updated requirements
 - [x] Test Docker Compose startup
 - [x] Verify backend container health
 

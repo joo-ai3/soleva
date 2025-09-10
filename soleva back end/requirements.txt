@@ -70,6 +70,3 @@ reportlab==4.0.7
 xlsxwriter==3.1.9
 pandas==2.1.4
 numpy==1.24.4
-
-#sentry-sdk
-sentry-sdk==1.38.0

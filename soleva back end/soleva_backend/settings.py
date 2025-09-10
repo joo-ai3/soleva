@@ -6,11 +6,9 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
+# Try to import decouple, fallback to os.environ if not available
 try:
     from decouple import config
-    import sentry_sdk
-    from sentry_sdk.integrations.django import DjangoIntegration
-    from sentry_sdk.integrations.celery import CeleryIntegration
 except ImportError:
     def config(key, default=None, cast=str):
         value = os.environ.get(key, default)
@@ -56,10 +54,11 @@ if SENTRY_DSN and not DEBUG:
             attach_stacktrace=True,
             environment='production',
         )
-    except ImportError:
-        print("Sentry SDK not installed, skipping Sentry initialization")
+        print("Sentry initialized successfully")
+    except ImportError as e:
+        print(f"Sentry SDK not available: {e}")
     except Exception as e:
-        print(f"Sentry init failed: {e}")
+        print(f"Sentry initialization failed: {e}")
 
 # Apps
 DJANGO_APPS = [
