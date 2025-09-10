@@ -68,10 +68,11 @@ services:
     networks:
       - soleva_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
+      test: ["CMD", "python", "manage.py", "check", "--deploy"]
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 40s
 
   # Celery Worker
   celery:
@@ -92,10 +93,11 @@ services:
     networks:
       - soleva_network
     healthcheck:
-      test: ["CMD", "celery", "-A", "soleva_app", "inspect", "ping"]
+      test: ["CMD", "celery", "-A", "soleva_backend", "inspect", "ping"]
       interval: 60s
       timeout: 10s
       retries: 3
+      start_period: 60s
 
   # Celery Beat Scheduler
   celery-beat:
@@ -134,10 +136,11 @@ services:
     networks:
       - soleva_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 30s
 
   # Nginx Reverse Proxy & SSL
   nginx:
@@ -165,10 +168,11 @@ services:
     networks:
       - soleva_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 30s
 
   # Certbot for SSL certificates
   certbot:
