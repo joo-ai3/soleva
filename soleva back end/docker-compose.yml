@@ -75,3 +75,24 @@ services:
 volumes:
   postgres_data:
   redis_data:
+
+certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot-etc:/etc/letsencrypt
+      - ./certbot-var:/var/lib/letsencrypt
+      - webroot:/var/www/html
+       -depends_on:
+        - nginx
+command: certonly --webroot --webroot-path=/var/www/html --email support@solevaeg.com --agree-tos --no-eff-email --non-interactive --keep-until-expiring -d solevaeg.com
+
+
+  network:
+    solevaeg-app-network:
+      driver: bridge
+
+      volumes:
+        certbot-etc:
+        certbot-var:
+      

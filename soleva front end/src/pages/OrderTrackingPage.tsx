@@ -131,7 +131,7 @@ export default function OrderTrackingPage() {
   };
 
   if (!tracking && !loading && !error) {
-    return (
+  return (
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="container mx-auto px-4 max-w-md">
           <motion.div
@@ -149,7 +149,7 @@ export default function OrderTrackingPage() {
             </p>
           </motion.div>
 
-          <GlassCard>
+      <GlassCard>
             <form onSubmit={handleTrackOrder} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -407,8 +407,8 @@ export default function OrderTrackingPage() {
               >
                 {lang === 'ar' ? 'حاول مرة أخرى' : 'Try Again'}
               </GlassButton>
-            </div>
-          </GlassCard>
+        </div>
+      </GlassCard>
         )}
       </div>
     </div>

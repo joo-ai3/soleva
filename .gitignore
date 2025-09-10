@@ -34,6 +34,14 @@ backups/
 *.code-workspace
 
 # ======================
+# Environment Files (Security)
+# ======================
+.env
+.env.local
+.env.production
+.env.development
+
+# ======================
 # System Files
 # ======================
 .DS_Store
