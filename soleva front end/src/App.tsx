@@ -5,6 +5,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { FavoritesProvider } from './contexts/FavoritesContext';
+import { OffersProvider } from './contexts/OffersContext';
 import { WebsiteProvider } from './contexts/WebsiteContext';
 import { FlyingAnimationProvider } from './components/FlyingAnimation';
 import RoutesWrapper from "./components/RoutesWrapper";
@@ -18,18 +19,20 @@ export default function App() {
       <LangProvider>
         <ThemeProvider>
           <WebsiteProvider>
-            <FlyingAnimationProvider>
-              <FavoritesProvider>
-                <AuthProvider>
+            <AuthProvider>
+              <FlyingAnimationProvider>
+                <FavoritesProvider>
                   <CartProvider>
-                    <ToastProvider>
-                      <OfflineIndicator />
-                      <RoutesWrapper />
-                    </ToastProvider>
+                    <OffersProvider>
+                      <ToastProvider>
+                        <OfflineIndicator />
+                        <RoutesWrapper />
+                      </ToastProvider>
+                    </OffersProvider>
                   </CartProvider>
-                </AuthProvider>
-              </FavoritesProvider>
-            </FlyingAnimationProvider>
+                </FavoritesProvider>
+              </FlyingAnimationProvider>
+            </AuthProvider>
           </WebsiteProvider>
         </ThemeProvider>
       </LangProvider>

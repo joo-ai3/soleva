@@ -1,0 +1,17 @@
+INFO 2025-09-11 19:13:35,003 autoreload 26536 23188 Watching for file changes with StatReloader
+INFO 2025-09-11 19:19:17,611 autoreload 14696 9356 Watching for file changes with StatReloader
+INFO 2025-09-11 19:20:46,416 autoreload 11752 26380 Watching for file changes with StatReloader
+INFO 2025-09-11 19:27:04,068 autoreload 24360 26408 Watching for file changes with StatReloader
+INFO 2025-09-11 20:40:55,631 autoreload 1480 19616 Watching for file changes with StatReloader
+INFO 2025-09-11 20:41:25,954 basehttp 1480 4236 "GET /api/health/ HTTP/1.1" 301 0
+INFO 2025-09-11 20:41:36,354 basehttp 1480 18688 "GET / HTTP/1.1" 301 0
+INFO 2025-09-11 20:41:36,643 basehttp 1480 22520 code 400, message Bad request version ('\x02h2\x08http/1.1\x00')
+ERROR 2025-09-11 20:41:36,660 basehttp 1480 22520 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-09-11 20:41:36,703 basehttp 1480 27268 code 400, message Bad request version ('\x00\x02\x01\x00\x00\x1b\x00\x03\x02\x00\x02\x00')
+ERROR 2025-09-11 20:41:36,704 basehttp 1480 27268 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-09-11 20:44:29,698 basehttp 1480 23184 "GET /api/health/ HTTP/1.1" 301 0
+INFO 2025-09-11 20:44:32,949 basehttp 1480 2776 code 400, message Bad request version ('\x10\x19\x8d«\x9cH\x8dok')
+ERROR 2025-09-11 20:44:32,950 basehttp 1480 2776 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-09-11 20:47:41,103 basehttp 1480 18212 "GET /api/health/ HTTP/1.1" 301 0
+INFO 2025-09-11 20:47:43,269 basehttp 1480 16584 code 400, message Bad request version ('\x00\x04\x03\x00\x01\x02\x00')
+ERROR 2025-09-11 20:47:43,270 basehttp 1480 16584 You're accessing the development server over HTTPS, but it only supports HTTP.
