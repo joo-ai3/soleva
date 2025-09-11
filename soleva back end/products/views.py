@@ -2,7 +2,7 @@ from rest_framework import status, permissions, filters, generics
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
-from django.db.models import Q, Count, Avg, Min, Max
+from django.db.models import Q, Count, Avg, Min, Max, F
 from django.core.cache import cache
 from django_filters.rest_framework import DjangoFilterBackend
 from fuzzywuzzy import fuzz, process
@@ -133,7 +133,7 @@ class ProductViewSet(ModelViewSet):
         """Get products on sale"""
         on_sale_products = self.get_queryset().filter(
             compare_price__isnull=False,
-            compare_price__gt=models.F('price')
+            compare_price__gt=F('price')
         )[:12]
         
         serializer = ProductListSerializer(
@@ -242,7 +242,7 @@ class ProductViewSet(ModelViewSet):
         if data.get('on_sale'):
             queryset = queryset.filter(
                 compare_price__isnull=False,
-                compare_price__gt=models.F('price')
+                compare_price__gt=F('price')
             )
         
         if data.get('in_stock'):
