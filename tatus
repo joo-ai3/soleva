@@ -1,0 +1,5 @@
+[33meb12abd[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Update production configuration to enforce SQLite usage for testing, modify ALLOWED_HOSTS for expanded service access, and change SECRET_KEY for enhanced security. Additionally, log file created to capture application activity.
+[33m9a8ed3c[m Add security measures in Nginx configuration to block common attack vectors and sensitive files, enhancing application security.
+[33mb106a32[m Enhance ALLOWED_HOSTS configuration in settings.py with debug logging for better visibility and include 'backend:8000' for improved inter-container communication.
+[33m9d0c21a[m Update ALLOWED_HOSTS in docker.env to include additional service names for improved inter-container communication.
+[33m2277d62[m Enhance ALLOWED_HOSTS configuration in settings.py: allow dynamic host entries from environment variables, add Docker service names for inter-container communication, and ensure no duplicates in the final list.

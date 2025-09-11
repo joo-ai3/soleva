@@ -137,9 +137,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'soleva_backend.wsgi.application'
 
-# Database
-# Force SQLite for immediate testing
-DATABASES = {'default': {'ENGINE':'django.db.backends.sqlite3','NAME': BASE_DIR / 'db.sqlite3'}}
+# Database Configuration
+USE_SQLITE = config('USE_SQLITE', default=False, cast=bool)
+
+if USE_SQLITE:
+    # SQLite for local development/testing
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    # PostgreSQL for production/Docker
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME', default='soleva_db'),
+            'USER': config('DB_USER', default='soleva_user'),
+            'PASSWORD': config('DB_PASSWORD', default=''),
+            'HOST': config('DB_HOST', default='postgres'),
+            'PORT': config('DB_PORT', default='5432'),
+            'OPTIONS': {
+                'client_encoding': 'UTF8',
+            },
+        }
+    }
 
 AUTH_USER_MODEL = 'users.User'
 

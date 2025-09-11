@@ -19,20 +19,20 @@ export default function App() {
       <LangProvider>
         <ThemeProvider>
           <WebsiteProvider>
-            <AuthProvider>
-              <FlyingAnimationProvider>
-                <FavoritesProvider>
-                  <CartProvider>
-                    <OffersProvider>
-                      <ToastProvider>
+            <ToastProvider>
+              <AuthProvider>
+                <FlyingAnimationProvider>
+                  <FavoritesProvider>
+                    <CartProvider>
+                      <OffersProvider>
                         <OfflineIndicator />
                         <RoutesWrapper />
-                      </ToastProvider>
-                    </OffersProvider>
-                  </CartProvider>
-                </FavoritesProvider>
-              </FlyingAnimationProvider>
-            </AuthProvider>
+                      </OffersProvider>
+                    </CartProvider>
+                  </FavoritesProvider>
+                </FlyingAnimationProvider>
+              </AuthProvider>
+            </ToastProvider>
           </WebsiteProvider>
         </ThemeProvider>
       </LangProvider>

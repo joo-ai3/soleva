@@ -73,8 +73,7 @@ export default function RoutesWrapper() {
               <Route path="/collections/:id" element={<LazyRoute component={LazyCollectionPage} />} />
               <Route path="/product/:id" element={<LazyRoute component={LazyProductPage} />} />
               <Route path="/flash-sale/:id" element={<LazyRoute component={LazyFlashSalePage} />} />
-          <Route path="/verify-email" element={<LazyRoute component={LazyVerifyEmailPage} />} />
-          <Route path="/register" element={<LazyRoute component={LazyRegisterPage} />} />
+              <Route path="/verify-email" element={<LazyRoute component={LazyVerifyEmailPage} />} />
               <Route path="/cart" element={<LazyRoute component={LazyCartPage} />} />
               <Route path="/favorites" element={<LazyRoute component={LazyFavoritesPage} />} />
               <Route path="/about" element={<LazyRoute component={LazyAboutPage} />} />
