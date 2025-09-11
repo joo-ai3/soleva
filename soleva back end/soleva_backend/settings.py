@@ -26,7 +26,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='change-this-in-production')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = [ 'solevaeg.com', 'www.solevaeg.com', '213.130.147.41' ]
+# Configure ALLOWED_HOSTS
+ALLOWED_HOSTS_ENV = config('ALLOWED_HOSTS', default='')
+if ALLOWED_HOSTS_ENV:
+    ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_ENV.split(',')]
+else:
+    ALLOWED_HOSTS = [
+        'solevaeg.com',
+        'www.solevaeg.com',
+        '213.130.147.41',
+        'backend',          # Docker service name for inter-container communication
+        'frontend',         # Docker service name
+        'nginx',            # Docker service name
+        'localhost',        # For local development
+        '127.0.0.1',       # For local development
+        '0.0.0.0',         # For Docker containers
+    ]
+
+# Add additional hosts from environment if specified
+EXTRA_ALLOWED_HOSTS = config('EXTRA_ALLOWED_HOSTS', default='')
+if EXTRA_ALLOWED_HOSTS:
+    extra_hosts = [host.strip() for host in EXTRA_ALLOWED_HOSTS.split(',')]
+    ALLOWED_HOSTS.extend(extra_hosts)
+
+# Remove duplicates and filter out empty strings
+ALLOWED_HOSTS = list(set(filter(None, ALLOWED_HOSTS)))
 
 # Sentry
 SENTRY_DSN = config('SENTRY_DSN', default='')
