@@ -28,29 +28,36 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Configure ALLOWED_HOSTS
 ALLOWED_HOSTS_ENV = config('ALLOWED_HOSTS', default='')
+print(f"DEBUG: ALLOWED_HOSTS_ENV = '{ALLOWED_HOSTS_ENV}'")  # Debug logging
+
 if ALLOWED_HOSTS_ENV:
     ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_ENV.split(',')]
+    print(f"DEBUG: ALLOWED_HOSTS from env = {ALLOWED_HOSTS}")  # Debug logging
 else:
     ALLOWED_HOSTS = [
         'solevaeg.com',
         'www.solevaeg.com',
         '213.130.147.41',
         'backend',          # Docker service name for inter-container communication
+        'backend:8000',     # Docker service with port for inter-container communication
         'frontend',         # Docker service name
         'nginx',            # Docker service name
         'localhost',        # For local development
         '127.0.0.1',       # For local development
         '0.0.0.0',         # For Docker containers
     ]
+    print(f"DEBUG: ALLOWED_HOSTS using defaults = {ALLOWED_HOSTS}")  # Debug logging
 
 # Add additional hosts from environment if specified
 EXTRA_ALLOWED_HOSTS = config('EXTRA_ALLOWED_HOSTS', default='')
 if EXTRA_ALLOWED_HOSTS:
     extra_hosts = [host.strip() for host in EXTRA_ALLOWED_HOSTS.split(',')]
     ALLOWED_HOSTS.extend(extra_hosts)
+    print(f"DEBUG: Added EXTRA_ALLOWED_HOSTS = {extra_hosts}")  # Debug logging
 
 # Remove duplicates and filter out empty strings
 ALLOWED_HOSTS = list(set(filter(None, ALLOWED_HOSTS)))
+print(f"DEBUG: FINAL ALLOWED_HOSTS = {ALLOWED_HOSTS}")  # Debug logging
 
 # Sentry
 SENTRY_DSN = config('SENTRY_DSN', default='')
