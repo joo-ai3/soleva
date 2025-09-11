@@ -6,6 +6,7 @@ django-environ==0.11.2
 gunicorn==21.2.0
 whitenoise==6.6.0
 gevent==24.2.1
+setuptools<81.0.0  # Pin setuptools to avoid pkg_resources deprecation warning
 
 # Database and Caching
 psycopg2-binary==2.9.9
