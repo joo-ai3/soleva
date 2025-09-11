@@ -22,10 +22,12 @@ def run_command(cmd, description):
     try:
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=30)
         if result.returncode == 0:
-            print("   ✅ SUCCESS"            if result.stdout.strip():
+            print("   ✅ SUCCESS")
+            if result.stdout.strip():
                 print(f"   Output: {result.stdout.strip()}")
         else:
-            print("   ❌ FAILED"            if result.stderr.strip():
+            print("   ❌ FAILED")
+            if result.stderr.strip():
                 print(f"   Error: {result.stderr.strip()}")
         return result.returncode == 0, result.stdout, result.stderr
     except Exception as e:
