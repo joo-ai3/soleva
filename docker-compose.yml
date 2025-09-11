@@ -126,8 +126,7 @@ services:
     restart: unless-stopped
     env_file:
       - docker.env
-    ports:
-      - "80:80"
+    # Remove port mapping - nginx will proxy requests to frontend
     depends_on:
       backend:
         condition: service_healthy
