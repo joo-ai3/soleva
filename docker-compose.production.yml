@@ -151,6 +151,7 @@ services:
       - frontend_build:/var/www/html
       - ./ssl/certbot/conf:/etc/letsencrypt
       - ./ssl/certbot/www:/var/www/certbot
+      - ./ssl/selfsigned:/etc/nginx/ssl/selfsigned
       - ./logs/nginx:/var/log/nginx
     depends_on:
       - backend
