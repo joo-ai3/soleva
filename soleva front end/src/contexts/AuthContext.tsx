@@ -66,12 +66,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               setUser(response.data as User);
               localStorage.setItem('user', JSON.stringify(response.data));
             }
-          } catch {
-            // Token is invalid, clear data
-            localStorage.removeItem(API_CONFIG.AUTH_TOKEN_KEY);
-            localStorage.removeItem(API_CONFIG.REFRESH_TOKEN_KEY);
-            localStorage.removeItem('user');
-            setUser(null);
+          } catch (error: any) {
+            console.warn('Failed to verify token with backend:', error);
+            // Don't clear data if backend is unreachable, just log the error
+            // This prevents the app from crashing when backend is down
+            if (error?.response?.status === 401) {
+              // Only clear data if token is actually invalid
+              localStorage.removeItem(API_CONFIG.AUTH_TOKEN_KEY);
+              localStorage.removeItem(API_CONFIG.REFRESH_TOKEN_KEY);
+              localStorage.removeItem('user');
+              setUser(null);
+            } else if (error?.code === 'NETWORK_ERROR' || error?.message?.includes('Network Error') || !error?.response) {
+              // Network error - keep user data and show offline indicator
+              console.info('Backend appears to be offline. App will continue in offline mode.');
+            }
+            // If it's a network error or server error, keep the user data
           }
         } catch (error) {
           console.error('Error loading user:', error);

@@ -109,7 +109,8 @@ class ApiService {
       await this.axiosInstance.get('/health/', { timeout: 5000 });
       this.updateNetworkStatus(true);
       return true;
-    } catch {
+    } catch (error) {
+      console.warn('Backend health check failed:', error);
       this.updateNetworkStatus(false);
       return false;
     }

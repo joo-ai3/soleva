@@ -73,9 +73,12 @@ export class ErrorBoundary extends Component<Props, State> {
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
               Oops! Something went wrong
             </h1>
-            
+
             <p className="text-gray-600 mb-6">
-              We encountered an unexpected error. Don't worry, our team has been notified.
+              {this.state.error?.message?.includes('Network Error') ||
+               this.state.error?.message?.includes('timeout') ?
+                'Unable to connect to our servers. Please check your internet connection and try again.' :
+                'We encountered an unexpected error. Don\'t worry, our team has been notified.'}
             </p>
 
             <div className="space-y-3">

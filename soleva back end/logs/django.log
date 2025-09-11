@@ -19,3 +19,19 @@ INFO 2025-09-11 21:25:04,348 autoreload 9616 17748 Watching for file changes wit
 INFO 2025-09-11 21:29:42,904 autoreload 24540 16780 Watching for file changes with StatReloader
 INFO 2025-09-11 21:39:19,711 autoreload 22596 19712 Watching for file changes with StatReloader
 INFO 2025-09-11 21:41:43,657 autoreload 10700 25504 Watching for file changes with StatReloader
+INFO 2025-09-11 23:32:45,277 basehttp 10700 18940 "GET /api HTTP/1.1" 301 0
+INFO 2025-09-11 23:32:47,322 basehttp 10700 14172 code 400, message Bad request version ('à¢\x83\x08Qã®n>c\x18¿q')
+ERROR 2025-09-11 23:32:47,325 basehttp 10700 14172 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-09-11 23:32:47,346 basehttp 10700 27056 code 400, message Bad request syntax ('\x16\x03\x01\x01\x03\x01\x00\x00ÿ\x03\x03')
+ERROR 2025-09-11 23:32:47,346 basehttp 10700 27056 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-09-11 23:33:14,707 basehttp 10700 24676 "GET /api/website/banners/?location=top HTTP/1.1" 301 0
+INFO 2025-09-11 23:33:14,804 basehttp 10700 15368 "GET /api/website/banners/?location=header HTTP/1.1" 301 0
+INFO 2025-09-11 23:33:14,828 basehttp 10700 25760 "GET /api/offers/flash-sales/ HTTP/1.1" 301 0
+INFO 2025-09-11 23:33:14,861 basehttp 10700 19976 "GET /api/offers/flash-sales/active/ HTTP/1.1" 301 0
+INFO 2025-09-11 23:33:14,882 basehttp 10700 26960 "GET /api/website/config/ HTTP/1.1" 301 0
+INFO 2025-09-11 23:45:03,604 basehttp 10700 21980 "GET /api HTTP/1.1" 301 0
+INFO 2025-09-11 23:45:06,003 basehttp 10700 2492 code 400, message Bad request version ("\x0e(zë)ÕcÕôªf¯\x93Ö\x80\x93\x809ªº\x04Ù\x86âÅÕ¥±Áw\x00,\x13\x02\x13\x01À,À+À0À/\x00\x9f\x00\x9eÀ$À#À(À'À")
+ERROR 2025-09-11 23:45:06,004 basehttp 10700 2492 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-09-11 23:45:06,084 basehttp 10700 15848 code 400, message Bad request version ("xbÕßáá0®\x810°ÊGÏyqoO\x8aO\x7føeæN\x97\x83\x18À\x00,\x13\x02\x13\x01À,À+À0À/\x00\x9f\x00\x9eÀ$À#À(À'À")
+ERROR 2025-09-11 23:45:06,101 basehttp 10700 15848 You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO 2025-09-11 23:45:18,837 autoreload 24104 25992 Watching for file changes with StatReloader
