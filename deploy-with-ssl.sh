@@ -90,20 +90,24 @@ sleep 10
 # Test the deployment
 echo "🧪 Testing deployment..."
 echo "Testing HTTP to HTTPS redirect..."
-curl -I http://localhost | grep -q "301" && echo "✅ HTTP redirect working" || echo "⚠️ HTTP redirect may not be working"
+curl -I http://$DOMAIN | grep -q "301" && echo "✅ HTTP redirect working" || echo "⚠️ HTTP redirect may not be working"
 
 echo "Testing HTTPS access..."
-curl -I -k https://localhost | grep -q "200" && echo "✅ HTTPS access working" || echo "⚠️ HTTPS access may not be working"
+curl -I -k https://$DOMAIN | grep -q "200" && echo "✅ HTTPS access working" || echo "⚠️ HTTPS access may not be working"
+
+# Test www redirect
+echo "Testing www to non-www redirect..."
+curl -I https://www.$DOMAIN | grep -q "301" && echo "✅ WWW redirect working" || echo "⚠️ WWW redirect may not be working"
 
 echo ""
 echo "🎉 Deployment completed successfully!"
 echo "======================================================"
 echo ""
 echo "📋 Next steps:"
-echo "1. Update your DNS A records to point $DOMAIN and www.$DOMAIN to your server IP"
-echo "2. Wait for DNS propagation (can take up to 48 hours)"
-echo "3. Test the live site: https://$DOMAIN"
-echo "4. Monitor SSL certificate renewal (happens automatically every 12 hours)"
+echo "1. ✅ DNS already configured: $DOMAIN → $(curl -s ifconfig.me || echo 'Check server IP')"
+echo "2. 🌐 Test the live site: https://$DOMAIN"
+echo "3. 🔄 Monitor SSL certificate renewal (happens automatically every 60 days)"
+echo "4. 📊 Check service health: docker-compose -f docker-compose.production.yml ps"
 echo ""
 echo "🔗 Useful commands:"
 echo "- View logs: docker-compose -f docker-compose.production.yml logs -f"

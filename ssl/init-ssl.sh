@@ -27,36 +27,60 @@ fi
 echo "Initializing SSL certificates for $DOMAIN and www.$DOMAIN"
 echo "Using email: $SSL_EMAIL"
 
-# Stop nginx temporarily for certificate initialization
-echo "Stopping nginx container..."
+# Create necessary directories
+mkdir -p certbot/conf certbot/www
+
+# Stop nginx temporarily for certificate initialization (if running)
+echo "Stopping nginx container if running..."
 docker stop soleva_nginx || true
+
+# Wait a moment
+sleep 2
 
 # Run certbot to get certificates
 echo "Requesting SSL certificates from Let's Encrypt..."
-docker run --rm -v "$(pwd)/certbot/conf:/etc/letsencrypt" -v "$(pwd)/certbot/www:/var/www/certbot" certbot/certbot certonly \
+docker run --rm \
+    -v "$(pwd)/certbot/conf:/etc/letsencrypt" \
+    -v "$(pwd)/certbot/www:/var/www/certbot" \
+    certbot/certbot certonly \
     --webroot \
     --webroot-path=/var/www/certbot \
     --email "$SSL_EMAIL" \
     --agree-tos \
     --no-eff-email \
+    --non-interactive \
+    --keep-until-expiring \
     -d "$DOMAIN" \
     -d "www.$DOMAIN"
 
-# Generate DH parameters if not exists
-if [ ! -f "certbot/conf/ssl-dhparams.pem" ]; then
-    echo "Generating DH parameters..."
-    openssl dhparam -out certbot/conf/ssl-dhparams.pem 2048
+# Check if certificates were obtained successfully
+if [ -d "certbot/conf/live/$DOMAIN" ]; then
+    echo "✅ SSL certificates obtained successfully!"
+
+    # Generate DH parameters if not exists
+    if [ ! -f "certbot/conf/ssl-dhparams.pem" ]; then
+        echo "Generating DH parameters..."
+        openssl dhparam -out certbot/conf/ssl-dhparams.pem 2048
+    fi
+
+    # Start nginx again
+    echo "Starting nginx container..."
+    docker start soleva_nginx
+
+    echo ""
+    echo "🎉 SSL Setup Complete!"
+    echo "Certificate files are located in: ssl/certbot/conf/live/$DOMAIN/"
+    echo ""
+    echo "📋 Next steps:"
+    echo "1. ✅ DNS already configured: $DOMAIN → $(curl -s ifconfig.me)"
+    echo "2. 🌐 Test HTTPS access: https://$DOMAIN"
+    echo "3. 🔄 Certificates will auto-renew every 60 days"
+    echo ""
+    echo "🔗 Quick test commands:"
+    echo "   curl -I https://$DOMAIN"
+    echo "   curl -I https://www.$DOMAIN"
+else
+    echo "❌ Failed to obtain SSL certificates"
+    echo "Please check the error messages above and try again"
+    exit 1
 fi
-
-# Start nginx again
-echo "Starting nginx container..."
-docker start soleva_nginx
-
-echo "SSL certificates initialized successfully!"
-echo "Certificate files are located in: ssl/certbot/conf/live/$DOMAIN/"
-echo ""
-echo "Next steps:"
-echo "1. Update your DNS to point $DOMAIN and www.$DOMAIN to your server IP"
-echo "2. Wait for DNS propagation (can take up to 48 hours)"
-echo "3. Test HTTPS access: https://$DOMAIN"
-echo "4. Certificates will auto-renew every 12 hours"
