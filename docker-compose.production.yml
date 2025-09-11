@@ -127,6 +127,16 @@ services:
     networks:
       - soleva_network
 
+  certbot:
+    image: certbot/certbot:latest
+    container_name: soleva_certbot
+    volumes:
+      - ./ssl/certbot/conf:/etc/letsencrypt
+      - ./ssl/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - soleva_network
+
   nginx:
     image: nginx:alpine
     container_name: soleva_nginx
@@ -135,16 +145,17 @@ services:
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/sites-available:/etc/nginx/sites-available
-      - ./nginx/sites-enabled:/etc/nginx/sites-enabled
+      - ./nginx/conf.d:/etc/nginx/conf.d
       - static_volume:/var/www/static
       - media_volume:/var/www/media
       - frontend_build:/var/www/html
-      - ./ssl:/etc/nginx/ssl
+      - ./ssl/certbot/conf:/etc/letsencrypt
+      - ./ssl/certbot/www:/var/www/certbot
       - ./logs/nginx:/var/log/nginx
     depends_on:
       - backend
       - frontend
+      - certbot
     restart: unless-stopped
     networks:
       - soleva_network
