@@ -11,8 +11,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backups:/backups
-    ports:
-      - "5432:5432"
+    # Remove external port exposure for security
+    # ports:
+    #   - "5432:5432"
     restart: unless-stopped
     networks:
       - soleva_network
@@ -23,8 +24,9 @@ services:
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
-    ports:
-      - "6379:6379"
+    # Remove external port exposure for security
+    # ports:
+    #   - "6379:6379"
     restart: unless-stopped
     networks:
       - soleva_network
