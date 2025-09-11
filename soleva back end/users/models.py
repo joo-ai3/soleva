@@ -1,13 +1,47 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 
 
+class CustomUserManager(UserManager):
+    """Custom user manager to handle create_superuser with email as USERNAME_FIELD"""
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        """Create and save a superuser with the given email and password."""
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self._create_user(email, email, password, **extra_fields)
+
+    def _create_user(self, email, username, password, **extra_fields):
+        """Create and save a user with the given email, username and password."""
+        if not email:
+            raise ValueError('The Email must be set')
+        email = self.normalize_email(email)
+
+        # Set username to email if not provided (for compatibility)
+        if not username:
+            username = email
+
+        user = self.model(email=email, username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+
 class User(AbstractUser):
     """Custom User model extending Django's AbstractUser"""
-    
+
     email = models.EmailField(_('email address'), unique=True)
+
+    # Use custom manager
+    objects = CustomUserManager()
     phone_number = PhoneNumberField(_('phone number'), blank=True, null=True)
     first_name = models.CharField(_('first name'), max_length=150)
     last_name = models.CharField(_('last name'), max_length=150)
@@ -51,7 +85,7 @@ class User(AbstractUser):
     last_login_ip = models.GenericIPAddressField(_('last login IP'), blank=True, null=True)
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
     
     class Meta:
         verbose_name = _('User')

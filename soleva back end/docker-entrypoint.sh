@@ -83,7 +83,6 @@ try:
     User = get_user_model()
     if not User.objects.filter(email='admin@solevaeg.com').exists():
         User.objects.create_superuser(
-            username='admin',
             email='admin@solevaeg.com',
             password='${ADMIN_PASSWORD}',
             first_name='Admin',
