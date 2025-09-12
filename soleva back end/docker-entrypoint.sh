@@ -100,17 +100,24 @@ mkdir -p /app/logs
 
 # Start the server with better error handling
 log "Starting Django server with Gunicorn..."
-exec gunicorn \
-    --bind 0.0.0.0:8000 \
-    --workers ${GUNICORN_WORKERS:-4} \
-    --worker-class gevent \
-    --worker-connections 1000 \
-    --max-requests 1000 \
-    --max-requests-jitter 100 \
-    --timeout 30 \
-    --keep-alive 2 \
-    --access-logfile /app/logs/gunicorn-access.log \
-    --error-logfile /app/logs/gunicorn-error.log \
-    --log-level ${LOG_LEVEL:-info} \
-    --reload \
-    soleva_backend.wsgi:application
+
+# Enable reload only when DEBUG is true
+GUNICORN_ARGS=(
+    --bind 0.0.0.0:8000
+    --workers ${GUNICORN_WORKERS:-4}
+    --worker-class gevent
+    --worker-connections 1000
+    --max-requests 1000
+    --max-requests-jitter 100
+    --timeout 30
+    --keep-alive 2
+    --access-logfile /app/logs/gunicorn-access.log
+    --error-logfile /app/logs/gunicorn-error.log
+    --log-level ${LOG_LEVEL:-info}
+)
+
+if [ "${DEBUG}" = "True" ] || [ "${DEBUG}" = "true" ] || [ "${DEBUG}" = "1" ]; then
+    GUNICORN_ARGS+=( --reload )
+fi
+
+exec gunicorn "${GUNICORN_ARGS[@]}" soleva_backend.wsgi:application

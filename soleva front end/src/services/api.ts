@@ -479,7 +479,9 @@ export const ordersApi = {
   },
   
   trackOrder: async (orderNumber: string) => {
-    return apiService.get(`/orders/track/${orderNumber}/`);
+    // Backend expects query params: ?order_number=...&email=...
+    const params = new URLSearchParams({ order_number: String(orderNumber) }).toString();
+    return apiService.get(`/orders/track/?${params}`);
   },
   
   uploadPaymentProof: async (orderId: number, formData: FormData) => {

@@ -3,7 +3,7 @@ name: soleva
 services:
   # PostgreSQL Database
   postgres:
-    image: postgres:latest
+    image: postgres:15-alpine
     container_name: soleva_postgres
     restart: unless-stopped
     env_file:
@@ -16,9 +16,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backups:/backups
-    # Remove external port exposure for security
-    # ports:
-    #   - "5432:5432"
     networks:
       - soleva_network
     healthcheck:
@@ -29,7 +26,7 @@ services:
 
   # Redis Cache & Message Broker
   redis:
-    image: redis:latest
+    image: redis:7.4.5
     container_name: soleva_redis
     restart: unless-stopped
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
@@ -37,9 +34,6 @@ services:
       - docker.env
     volumes:
       - redis_data:/data
-    # Remove external port exposure for security
-    # ports:
-    #   - "6379:6379"
     networks:
       - soleva_network
     healthcheck:
@@ -62,10 +56,6 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    # Optional: Uncomment for debugging - NOT recommended for production
-    # ports:
-    #   - "8001:8000"
-    # Let the entrypoint script handle startup
     volumes:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
@@ -179,38 +169,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
-
-  # Certbot for SSL certificates - DISABLED FOR INITIAL SETUP
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: soleva_certbot
-  #   volumes:
-  #     - letsencrypt_certs:/etc/letsencrypt
-  #     - certbot_webroot:/var/www/certbot
-  #     - certbot_logs:/var/log/letsencrypt
-  #   command: certonly --webroot --webroot-path=/var/www/certbot --email ${SSL_EMAIL} --agree-tos --no-eff-email --non-interactive --keep-until-expiring -d ${DOMAIN} -d www.${DOMAIN}
-  #   depends_on:
-  #     - nginx
-  #   networks:
-  #     - soleva_network
-  #   restart: "no"
-
-  # SSL Certificate Renewal
-  certbot-renew:
-    image: certbot/certbot
-    container_name: soleva_certbot_renew
-    volumes:
-      - letsencrypt_certs:/etc/letsencrypt
-      - certbot_webroot:/var/www/certbot
-      - certbot_logs:/var/log/letsencrypt
-    command: renew --quiet --no-self-upgrade
-    depends_on:
-      - nginx
-    networks:
-      - soleva_network
-    restart: "no"
-    profiles:
-      - renewal
 
 volumes:
   postgres_data:

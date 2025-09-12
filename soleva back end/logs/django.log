@@ -35,3 +35,4 @@ ERROR 2025-09-11 23:45:06,004 basehttp 10700 2492 You're accessing the developme
 INFO 2025-09-11 23:45:06,084 basehttp 10700 15848 code 400, message Bad request version ("xb’ﬂ··0Æ\x810∞ GœyqoO\x8aO\x7f¯eÊN\x97\x83\x18¿\x00,\x13\x02\x13\x01¿,¿+¿0¿/\x00\x9f\x00\x9e¿$¿#¿(¿'¿")
 ERROR 2025-09-11 23:45:06,101 basehttp 10700 15848 You're accessing the development server over HTTPS, but it only supports HTTP.
 INFO 2025-09-11 23:45:18,837 autoreload 24104 25992 Watching for file changes with StatReloader
+INFO 2025-09-12 20:47:45,700 autoreload 26288 12816 Watching for file changes with StatReloader

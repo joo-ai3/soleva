@@ -59,6 +59,8 @@ urlpatterns = [
     path('api/', api_root, name='api_root'),
     
     # API Endpoints
+    # Admin Panel API
+    path('api/admin/', include('admin_panel.urls')),
     path('api/auth/', include('users.urls')),
     path('api/products/', include('products.urls')),
     path('api/orders/', include('orders.urls')),
