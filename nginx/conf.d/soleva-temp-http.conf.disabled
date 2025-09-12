@@ -1,22 +1,23 @@
-# Temporary HTTP-only Configuration for Soleva Platform
+# Temporary HTTP-only Configuration for Soleva Platform - DISABLED
 # Domain: solevaeg.com
-# This configuration allows access via HTTP while SSL certificates are being set up
+# This configuration is disabled to prevent duplicate upstream conflicts
+# Upstream definitions moved to soleva.conf
 
-# Upstream definitions
-upstream backend {
-    server backend:8000 fail_timeout=0;
-    keepalive 32;
-}
+# Upstream definitions - DISABLED (using ones from soleva.conf)
+# upstream backend {
+#     server backend:8000 fail_timeout=0;
+#     keepalive 32;
+# }
+# 
+# upstream frontend {
+#     server frontend:80 fail_timeout=0;
+#     keepalive 32;
+# }
 
-upstream frontend {
-    server frontend:80 fail_timeout=0;
-    keepalive 32;
-}
-
-# Main server configuration for HTTP access
-server {
-    listen 80;
-    server_name solevaeg.com www.solevaeg.com;
+# Main server configuration for HTTP access - DISABLED
+# server {
+#     listen 80;
+#     server_name solevaeg.com www.solevaeg.com;
     
     # Let's Encrypt challenge location (for future SSL setup)
     location /.well-known/acme-challenge/ {
