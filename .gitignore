@@ -1,76 +1,442 @@
-# Dependencies
-node_modules/
+# ==============================================================================
+# SOLEVA PROJECT - COMPREHENSIVE .gitignore
+# ==============================================================================
+# This file ensures sensitive data, build artifacts, and unnecessary files 
+# are excluded from the git repository.
+
+# ==============================================================================
+# ENVIRONMENT & CONFIGURATION FILES
+# ==============================================================================
+# Environment files - CRITICAL: Never commit these!
+.env
+.env.*
+docker.env
+docker.env.*
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+.env.staging
+
+# Configuration backups and templates (keep templates, exclude filled configs)
+*.env.backup
+*.env.bak
+docker.env.backup
+docker.env.bak
+
+# ==============================================================================
+# PYTHON/DJANGO BACKEND
+# ==============================================================================
+# Python bytecode
 __pycache__/
+*.py[cod]
+*$py.class
 *.pyc
 *.pyo
 *.pyd
-.Python
+
+# Python virtual environments
 env/
 venv/
 .venv/
-pip-log.txt
-pip-delete-this-directory.txt
+ENV/
+env.bak/
+venv.bak/
 
-# Build outputs
+# Django specific
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Django static files and media uploads
+soleva back end/staticfiles/
+soleva back end/static/
+soleva back end/media/
+soleva back end/uploads/
+
+# Django migrations (keep initial migrations, exclude auto-generated ones)
+# Uncomment if you want to exclude all migrations:
+# */migrations/*.py
+# !*/migrations/__init__.py
+# !*/migrations/0001_initial.py
+
+# Python package distribution
 dist/
 build/
 *.egg-info/
+.eggs/
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-docker.env
+# Python testing
+.tox/
+.coverage
+.pytest_cache/
+.cache
+htmlcov/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
 
-# Database files
+# ==============================================================================
+# NODE.JS/FRONTEND
+# ==============================================================================
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# NPM/Yarn package-lock files (keep package-lock.json for consistency)
+# yarn.lock
+
+# Frontend build outputs
+soleva front end/dist/
+soleva front end/build/
+soleva front end/.next/
+soleva front end/out/
+
+# Vite/React specific
+.vite/
+soleva front end/.vite/
+soleva front end/dist/
+soleva front end/build/
+
+# ESLint cache
+.eslintcache
+
+# TypeScript cache
+*.tsbuildinfo
+
+# ==============================================================================
+# DOCKER & CONTAINERIZATION
+# ==============================================================================
+# Docker override files
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Docker backup files
+docker-compose.yml.bak
+docker-compose.yaml.bak
+*.yml.bak
+*.yaml.bak
+
+# Docker volumes and data
+docker-data/
+postgres-data/
+redis-data/
+
+# ==============================================================================
+# SSL CERTIFICATES & SECURITY
+# ==============================================================================
+# SSL certificates and keys - CRITICAL: Never commit these!
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+
+# Let's Encrypt certificates
+ssl/certbot/
+letsencrypt/
+nginx/ssl/
+ssl/certs/
+ssl/private/
+certbot/
+
+# SSH keys
+*.rsa
+*.rsa.pub
+id_rsa*
+id_ed25519*
+known_hosts
+
+# GPG keys
+*.gpg
+*.asc
+
+# ==============================================================================
+# DATABASE FILES
+# ==============================================================================
+# SQLite databases
+*.sqlite
 *.sqlite3
 *.db
+*.db-journal
+*.db-shm
+*.db-wal
 
-# Logs
+# Database dumps and backups
+*.sql
+*.dump
+backups/*.sql
+backups/*.dump
+database-backup-*
+
+# ==============================================================================
+# LOGS & TEMPORARY FILES
+# ==============================================================================
+# Application logs
 *.log
 logs/
 soleva back end/logs/
+nginx/logs/
+backend_logs/
+frontend_logs/
+celery_logs/
 
-# IDE and editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Docker
-.dockerignore
-
-# Backup files
-*.bak
-*.backup
-*.orig
-*.old
-docker-compose.yml.bak
-docker-compose.override.yml.bak
-*.yml.bak
-*.yaml.bak
+# System logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
 # Temporary files
 *.tmp
 *.temp
 .cache/
 .tmp/
+temp/
+tmp/
 
-# Static files and media
-soleva back end/staticfiles/
-soleva back end/media/
+# ==============================================================================
+# IDE & EDITOR FILES
+# ==============================================================================
+# Visual Studio Code
+.vscode/
+*.code-workspace
 
-# SSL certificates
-nginx/ssl/
+# JetBrains IDEs (IntelliJ, PyCharm, WebStorm, etc.)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Atom
+.atom/
+
+# ==============================================================================
+# OPERATING SYSTEM FILES
+# ==============================================================================
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ==============================================================================
+# BACKUP & ARCHIVE FILES
+# ==============================================================================
+# Backup files
+*.bak
+*.backup
+*.orig
+*.old
+*.save
+*~
+
+# Archive files
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tbz2
+*.tar.xz
+*.txz
+*.rar
+*.7z
+
+# Backup directories
+backups/sensitive/
+backups/database/
+backups/ssl/
+backups/env/
+
+# ==============================================================================
+# MEDIA & UPLOADS
+# ==============================================================================
+# User uploaded files
+uploads/
+media/
+user-uploads/
+static-files/
+
+# Image processing cache
+.image-cache/
+thumbs/
+thumbnails/
+
+# ==============================================================================
+# TESTING & COVERAGE
+# ==============================================================================
+# Test coverage reports
+coverage/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.cache/
+.tox/
+
+# Test databases
+test_*.sqlite3
+test_*.db
+
+# ==============================================================================
+# DEPLOYMENT & SCRIPTS
+# ==============================================================================
+# Deployment scripts with sensitive data
+deploy-secrets.sh
+deploy-secrets.ps1
+production-deploy.sh
+production-deploy.ps1
+
+# Local deployment overrides
+docker-compose.local.yml
+docker-compose.dev.yml
+docker-compose.personal.yml
+
+# Kubernetes secrets
+secrets.yaml
+secrets.yml
+*-secret.yaml
+*-secret.yml
+
+# ==============================================================================
+# MONITORING & ANALYTICS
+# ==============================================================================
+# Error tracking
+.sentry-cli/
+sentry.properties
+
+# Analytics
+.analytics/
+analytics-data/
+
+# ==============================================================================
+# PACKAGE MANAGERS & DEPENDENCIES
+# ==============================================================================
+# Python
+Pipfile.lock
+poetry.lock
+
+# Node.js
+package-lock.json.bak
+yarn.lock.bak
+
+# ==============================================================================
+# CUSTOM SOLEVA EXCLUSIONS
+# ==============================================================================
+# Project-specific temporary files
+deployment-status.json
+*.deployment.log
+setup-*.log
+
+# Local development overrides
+local-settings.py
+local-config.js
+dev-override.*
+
+# Payment gateway test files
+payment-test-*
+stripe-test-*
+paymob-test-*
+
+# Customer data exports (never commit customer data!)
+customer-export-*
+order-export-*
+user-data-*
+
+# ==============================================================================
+# KEEP THESE FILES (Whitelist)
+# ==============================================================================
+# Keep essential configuration templates
+!docker.env.example
+!.env.example
+!.env.template
+!env-template.txt
+
+# Keep important documentation
+!README.md
+!DEPLOYMENT_GUIDE.md
+!ADMIN_PANEL_ACCESS_GUIDE.md
+
+# Keep Docker configuration
+!docker-compose.yml
+!docker-compose.production.yml
+!Dockerfile
+!.dockerignore
+
+# Keep Nginx configuration templates
+!nginx/nginx.conf
+!nginx/conf.d/*.conf
+
+# Keep essential scripts
+!scripts/
+!*.sh
+!*.ps1
+!*.bat
+
+# ==============================================================================
+# END OF .gitignore
+# ==============================================================================

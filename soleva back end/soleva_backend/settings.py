@@ -221,6 +221,12 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = ['https://solevaeg.com','https://www.solevaeg.com']
 CORS_ALLOW_CREDENTIALS = True
 
+# CSRF trusted origins for HTTPS
+CSRF_TRUSTED_ORIGINS = [
+    'https://solevaeg.com',
+    'https://www.solevaeg.com',
+]
+
 REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/1')
 
 CACHES = {'default': {'BACKEND':'django_redis.cache.RedisCache','LOCATION':REDIS_URL,'OPTIONS':{'CLIENT_CLASS':'django_redis.client.DefaultClient'}}}

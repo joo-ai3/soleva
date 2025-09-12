@@ -1,7 +1,7 @@
 // API Configuration for Backend Integration
 export const API_CONFIG = {
   // Base URL - can be overridden by environment variable
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api',
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://solevaeg.com/api',
   
   // API Version
   VERSION: 'v1',

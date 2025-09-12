@@ -147,15 +147,14 @@ services:
       retries: 3
       start_period: 60s
 
-  # Nginx Reverse Proxy (HTTP-only for initial setup)
+  # Nginx Reverse Proxy with SSL Support
   nginx:
     image: nginx:alpine
     container_name: soleva_nginx
     restart: unless-stopped
     ports:
       - "80:80"
-      # SSL port temporarily disabled
-      # - "443:443"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
@@ -174,26 +173,26 @@ services:
     networks:
       - soleva_network
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://backend:8000/api/health/"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 30s
 
-  # Certbot for SSL certificates - DISABLED FOR INITIAL SETUP
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: soleva_certbot
-  #   volumes:
-  #     - letsencrypt_certs:/etc/letsencrypt
-  #     - certbot_webroot:/var/www/certbot
-  #     - certbot_logs:/var/log/letsencrypt
-  #   command: certonly --webroot --webroot-path=/var/www/certbot --email ${SSL_EMAIL} --agree-tos --no-eff-email --non-interactive --keep-until-expiring -d ${DOMAIN} -d www.${DOMAIN}
-  #   depends_on:
-  #     - nginx
-  #   networks:
-  #     - soleva_network
-  #   restart: "no"
+  # Certbot for SSL certificates
+  certbot:
+    image: certbot/certbot
+    container_name: soleva_certbot
+    volumes:
+      - letsencrypt_certs:/etc/letsencrypt
+      - certbot_webroot:/var/www/certbot
+      - certbot_logs:/var/log/letsencrypt
+    command: certonly --webroot --webroot-path=/var/www/certbot --email ${SSL_EMAIL} --agree-tos --no-eff-email --non-interactive --keep-until-expiring -d ${DOMAIN} -d www.${DOMAIN}
+    depends_on:
+      - nginx
+    networks:
+      - soleva_network
+    restart: "no"
 
   # SSL Certificate Renewal
   certbot-renew:
