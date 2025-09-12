@@ -1,0 +1,29 @@
+﻿{
+    "domain":  "solevaeg.com",
+    "recovery_instructions":  "RECOVERY_INSTRUCTIONS.md",
+    "backup_date":  "2025-09-12 18:50:16",
+    "files_backed_up":  [
+                            "docker-compose.yml",
+                            "docker.env",
+                            "nginx",
+                            "soleva back end",
+                            "soleva front end",
+                            "scripts",
+                            "README.md",
+                            "DEPLOYMENT_GUIDE.md",
+                            "FINAL_DEPLOYMENT_CHECKLIST.md"
+                        ],
+    "backup_path":  ".\\backups\\pre-deployment-2025-09-12-18-48-43",
+    "configurations_backed_up":  [
+                                     "docker.env",
+                                     "nginx/nginx.conf",
+                                     "nginx/conf.d/soleva.conf",
+                                     "soleva back end/soleva_backend/settings.py",
+                                     "soleva back end/requirements.txt",
+                                     "soleva front end/package.json",
+                                     "soleva front end/vite.config.ts"
+                                 ],
+    "database_backup_script":  "backup-database.sh",
+    "project_version":  "1.0.0",
+    "admin_email":  "admin@solevaeg.com"
+}

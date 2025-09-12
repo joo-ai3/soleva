@@ -1,0 +1,43 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Welcome to {{ company_name }} - Verify Your Email{% endblock %}
+
+{% block content %}
+<h2 style="color: #333; margin-bottom: 25px; font-size: 24px;">Welcome to {{ company_name }}! 🎉</h2>
+
+<p style="margin-bottom: 20px; font-size: 16px; line-height: 1.6;">
+    Thank you for joining {{ company_name }}! To complete your registration and secure your account, 
+    please verify your email address using the verification code below.
+</p>
+
+<div class="otp-section">
+    <h3 style="color: #333; margin-bottom: 15px; font-size: 20px;">Your Verification Code</h3>
+    <div class="otp-code">{{ code }}</div>
+    <p style="color: #666; font-size: 14px; margin-top: 15px;">
+        This code will expire in <strong>{{ expires_minutes }} minutes</strong>
+    </p>
+</div>
+
+<p style="margin-bottom: 20px; font-size: 16px; line-height: 1.6;">
+    Simply enter this code in the verification field to activate your account and start exploring 
+    our amazing products and services.
+</p>
+
+<div class="security-notice">
+    <h3>🔒 Security Notice</h3>
+    <p>
+        For your security, never share this verification code with anyone. {{ company_name }} will never 
+        ask you for this code via phone or email.
+    </p>
+</div>
+
+<p style="margin-top: 30px; font-size: 16px; line-height: 1.6;">
+    If you didn't create an account with {{ company_name }}, please ignore this email. 
+    Your email address will not be used for any further communications.
+</p>
+
+<p style="margin-top: 20px; font-size: 16px; line-height: 1.6;">
+    Welcome aboard! 🚀<br>
+    The {{ company_name }} Team
+</p>
+{% endblock %}

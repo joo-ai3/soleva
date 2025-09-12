@@ -1,0 +1,8 @@
+Contact: mailto:security@solevaeg.com
+Contact: https://solevaeg.com/contact
+Expires: 2025-12-31T23:59:59.000Z
+Encryption: https://solevaeg.com/pgp-key.txt
+Acknowledgments: https://solevaeg.com/security-acknowledgments
+Preferred-Languages: en, ar
+Canonical: https://solevaeg.com/.well-known/security.txt
+Policy: https://solevaeg.com/security-policy

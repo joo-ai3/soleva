@@ -1,0 +1,74 @@
+# Django and Core Dependencies
+Django==4.2.7
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+django-environ==0.11.2
+gunicorn==21.2.0
+whitenoise==6.6.0
+gevent==24.2.1
+setuptools<81.0.0  # Pin setuptools to avoid pkg_resources deprecation warning
+
+# Database and Caching
+psycopg2-binary==2.9.9
+redis==5.0.1
+django-redis==5.4.0
+
+# Authentication and Security
+djangorestframework-simplejwt==5.3.0
+django-allauth==0.57.0
+cryptography==41.0.7
+
+# Async Tasks
+celery==5.3.4
+django-celery-beat==2.5.0
+flower==2.0.1
+
+# Image Processing
+Pillow==10.1.0
+
+# API and Filtering
+django-filter==23.4
+django-extensions==3.2.3
+
+# File Storage
+django-storages==1.14.2
+boto3==1.34.0
+
+# Phone Numbers
+django-phonenumber-field==7.2.0
+phonenumbers==8.13.26
+
+# Search and Text Processing
+fuzzywuzzy==0.18.0
+python-Levenshtein==0.23.0
+
+# HTTP Requests
+requests==2.31.0
+
+# Payment Processing
+stripe==7.8.0
+
+# Push Notifications
+firebase-admin==6.4.0
+
+# Development and Debugging
+django-debug-toolbar==4.2.0
+ipython==8.17.2
+
+# Monitoring and Logging
+sentry-sdk[django]==1.38.0
+
+# Email
+django-anymail==10.2
+
+# Time and Date
+python-dateutil==2.8.2
+
+# Utilities
+python-dotenv==1.0.0
+
+# PDF Generation and Accounting
+reportlab==4.0.7
+xlsxwriter==3.1.9
+pandas==2.1.4
+numpy==1.24.4

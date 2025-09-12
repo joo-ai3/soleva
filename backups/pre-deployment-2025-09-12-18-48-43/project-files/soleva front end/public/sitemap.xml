@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        
+    <!-- Homepage -->
+    <url>
+        <loc>https://solevaeg.com/</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/?lang=ar"/>
+        <image:image>
+            <image:loc>https://solevaeg.com/logo.png</image:loc>
+            <image:title>Soleva - Premium Egyptian Footwear</image:title>
+            <image:caption>Soleva brand logo featuring modern footwear design</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Products Main Page -->
+    <url>
+        <loc>https://solevaeg.com/products</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/products?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/products?lang=ar"/>
+    </url>
+    
+    <!-- Collections Page -->
+    <url>
+        <loc>https://solevaeg.com/collections</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/collections?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/collections?lang=ar"/>
+    </url>
+    
+    <!-- Men's Collection -->
+    <url>
+        <loc>https://solevaeg.com/collections/men</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/collections/men?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/collections/men?lang=ar"/>
+    </url>
+    
+    <!-- Women's Collection -->
+    <url>
+        <loc>https://solevaeg.com/collections/women</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/collections/women?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/collections/women?lang=ar"/>
+    </url>
+    
+    <!-- Essential Collection -->
+    <url>
+        <loc>https://solevaeg.com/collections/essential</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/collections/essential?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/collections/essential?lang=ar"/>
+    </url>
+    
+    <!-- About Page -->
+    <url>
+        <loc>https://solevaeg.com/about</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/about?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/about?lang=ar"/>
+    </url>
+    
+    <!-- Contact Page -->
+    <url>
+        <loc>https://solevaeg.com/contact</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/contact?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/contact?lang=ar"/>
+    </url>
+    
+    <!-- Privacy Policy -->
+    <url>
+        <loc>https://solevaeg.com/privacy</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/privacy?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/privacy?lang=ar"/>
+    </url>
+    
+    <!-- Terms of Service -->
+    <url>
+        <loc>https://solevaeg.com/terms</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/terms?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/terms?lang=ar"/>
+    </url>
+    
+    <!-- Order Tracking -->
+    <url>
+        <loc>https://solevaeg.com/track</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://solevaeg.com/track?lang=en"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://solevaeg.com/track?lang=ar"/>
+    </url>
+
+</urlset>
