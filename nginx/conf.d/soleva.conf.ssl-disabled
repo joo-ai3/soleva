@@ -1,6 +1,7 @@
-# SSL-Enabled Production Configuration for Soleva Platform - TEMPORARILY DISABLED
+# SSL-Enabled Production Configuration for Soleva Platform - DISABLED
 # Domain: solevaeg.com
-# This file is temporarily renamed to prevent SSL conflicts
+# This file is disabled to prevent SSL certificate errors that cause Nginx restarts
+# Will be re-enabled after SSL certificates are properly obtained
 
 # Upstream definitions
 upstream backend {
