@@ -413,3 +413,192 @@ def recent_customers(request):
         'customers': customer_data,
         'count': len(customer_data)
     })
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAdminUser])
+def sales_report(request):
+    """Sales report with detailed analytics"""
+    days = int(request.GET.get('days', 30))
+    start_date = timezone.now().date() - timedelta(days=days)
+    
+    # Sales summary
+    total_orders = Order.objects.filter(created_at__date__gte=start_date).count()
+    paid_orders = Order.objects.filter(
+        created_at__date__gte=start_date,
+        payment_status='paid'
+    ).count()
+    total_revenue = Order.objects.filter(
+        created_at__date__gte=start_date,
+        payment_status='paid'
+    ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0.00')
+    
+    # Payment method breakdown
+    payment_methods = Order.objects.filter(
+        created_at__date__gte=start_date,
+        payment_status='paid'
+    ).values('payment_method').annotate(
+        count=Count('id'),
+        revenue=Sum('total_amount')
+    ).order_by('-revenue')
+    
+    # Daily sales trend
+    daily_sales = Order.objects.filter(
+        created_at__date__gte=start_date,
+        payment_status='paid'
+    ).extra(
+        select={'day': 'date(created_at)'}
+    ).values('day').annotate(
+        orders=Count('id'),
+        revenue=Sum('total_amount')
+    ).order_by('day')
+    
+    report_data = {
+        'summary': {
+            'total_orders': total_orders,
+            'paid_orders': paid_orders,
+            'total_revenue': total_revenue,
+            'conversion_rate': (paid_orders / total_orders * 100) if total_orders > 0 else 0,
+        },
+        'payment_methods': list(payment_methods),
+        'daily_sales': list(daily_sales),
+        'period_days': days,
+    }
+    
+    return Response(report_data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAdminUser])
+def customer_report(request):
+    """Customer report with detailed analytics"""
+    days = int(request.GET.get('days', 30))
+    start_date = timezone.now().date() - timedelta(days=days)
+    
+    # Customer summary
+    total_customers = User.objects.filter(is_active=True, is_staff=False).count()
+    new_customers = User.objects.filter(
+        date_joined__date__gte=start_date,
+        is_staff=False
+    ).count()
+    
+    # Customer activity
+    active_customers = User.objects.filter(
+        is_staff=False,
+        orders__created_at__date__gte=start_date
+    ).distinct().count()
+    
+    # Customer segments
+    verified_customers = User.objects.filter(
+        is_active=True,
+        is_staff=False,
+        is_verified=True
+    ).count()
+    
+    # Top customers by spending
+    top_customers = User.objects.filter(
+        is_staff=False,
+        orders__created_at__date__gte=start_date,
+        orders__payment_status='paid'
+    ).annotate(
+        total_spent=Sum('orders__total_amount'),
+        order_count=Count('orders')
+    ).order_by('-total_spent')[:10]
+    
+    report_data = {
+        'summary': {
+            'total_customers': total_customers,
+            'new_customers': new_customers,
+            'active_customers': active_customers,
+            'verified_customers': verified_customers,
+            'verification_rate': (verified_customers / total_customers * 100) if total_customers > 0 else 0,
+        },
+        'top_customers': [
+            {
+                'id': customer.id,
+                'full_name': customer.full_name,
+                'email': customer.email,
+                'total_spent': customer.total_spent,
+                'order_count': customer.order_count,
+            }
+            for customer in top_customers
+        ],
+        'period_days': days,
+    }
+    
+    return Response(report_data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAdminUser])
+def inventory_report(request):
+    """Inventory report with stock analysis"""
+    # Stock levels
+    total_products = Product.objects.filter(is_active=True).count()
+    in_stock = Product.objects.filter(
+        Q(track_inventory=False) | Q(track_inventory=True, inventory_quantity__gt=0),
+        is_active=True,
+    ).count()
+    
+    out_of_stock = Product.objects.filter(
+        is_active=True,
+        track_inventory=True,
+        inventory_quantity=0
+    ).count()
+    
+    low_stock = Product.objects.filter(
+        is_active=True,
+        track_inventory=True,
+        inventory_quantity__lte=F('low_stock_threshold'),
+        inventory_quantity__gt=0
+    ).count()
+    
+    # Category breakdown
+    category_stock = Product.objects.filter(
+        is_active=True
+    ).values('category__name_en').annotate(
+        total_products=Count('id'),
+        in_stock=Count('id', filter=Q(
+            Q(track_inventory=False) | Q(track_inventory=True, inventory_quantity__gt=0)
+        )),
+        out_of_stock=Count('id', filter=Q(
+            track_inventory=True, inventory_quantity=0
+        )),
+        low_stock=Count('id', filter=Q(
+            track_inventory=True,
+            inventory_quantity__lte=F('low_stock_threshold'),
+            inventory_quantity__gt=0
+        ))
+    ).order_by('-total_products')
+    
+    # Low stock products details
+    low_stock_products = Product.objects.filter(
+        is_active=True,
+        track_inventory=True,
+        inventory_quantity__lte=F('low_stock_threshold')
+    ).select_related('category').order_by('inventory_quantity')
+    
+    report_data = {
+        'summary': {
+            'total_products': total_products,
+            'in_stock': in_stock,
+            'out_of_stock': out_of_stock,
+            'low_stock': low_stock,
+            'stock_rate': (in_stock / total_products * 100) if total_products > 0 else 0,
+        },
+        'category_breakdown': list(category_stock),
+        'low_stock_products': [
+            {
+                'id': product.id,
+                'name': product.name_en,
+                'sku': product.sku,
+                'category': product.category.name_en if product.category else '',
+                'inventory_quantity': product.inventory_quantity,
+                'low_stock_threshold': product.low_stock_threshold,
+                'price': product.price,
+            }
+            for product in low_stock_products
+        ],
+    }
+    
+    return Response(report_data)

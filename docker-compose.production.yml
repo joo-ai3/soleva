@@ -33,7 +33,7 @@ services:
 
   backend:
     build:
-      context: ./soleva\ back\ end
+      context: "./soleva back end"
       dockerfile: Dockerfile.prod
     container_name: soleva_backend
     environment:
@@ -61,7 +61,7 @@ services:
 
   celery:
     build:
-      context: ./soleva\ back\ end
+      context: "./soleva back end"
       dockerfile: Dockerfile.prod
     container_name: soleva_celery
     command: celery -A soleva_backend worker -l info
@@ -89,7 +89,7 @@ services:
 
   celery-beat:
     build:
-      context: ./soleva\ back\ end
+      context: "./soleva back end"
       dockerfile: Dockerfile.prod
     container_name: soleva_celery_beat
     command: celery -A soleva_backend beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
@@ -116,7 +116,7 @@ services:
 
   frontend:
     build:
-      context: ./soleva\ front\ end
+      context: "./soleva front end"
       dockerfile: Dockerfile.prod
     container_name: soleva_frontend
     environment:
